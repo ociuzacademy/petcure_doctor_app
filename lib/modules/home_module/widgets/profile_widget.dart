@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:petcure_doctor_app/modules/home_module/utils/profile_helper.dart';
 
 class ProfileWidget extends StatefulWidget {
   const ProfileWidget({super.key});
@@ -9,9 +9,11 @@ class ProfileWidget extends StatefulWidget {
 }
 
 class _ProfileWidgetState extends State<ProfileWidget> {
+  late final ProfileHelper _profileHelper;
   @override
   void initState() {
     super.initState();
+    _profileHelper = ProfileHelper(context: context);
   }
 
   @override
@@ -87,7 +89,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                   IconButton(
                     icon: const Icon(Icons.open_in_new, color: Colors.blue),
                     onPressed: () {
-                      _openGoogleMaps(latitude, longitude);
+                      _profileHelper.openGoogleMaps(latitude, longitude);
                     },
                   ),
                 ],
@@ -124,45 +126,6 @@ class _ProfileWidgetState extends State<ProfileWidget> {
           ),
         ),
       ),
-    );
-  }
-
-  /// Open Google Maps in the default map application or show an error dialog if it fails.
-  Future<void> _openGoogleMaps(double lat, double lon) async {
-    final Uri googleMapsUri = Uri.parse("geo:$lat,$lon?q=$lat,$lon");
-    final Uri webUri = Uri.parse(
-      "https://www.google.com/maps/search/?api=1&query=$lat,$lon",
-    );
-
-    if (await canLaunchUrl(googleMapsUri)) {
-      await launchUrl(googleMapsUri);
-    } else if (await canLaunchUrl(webUri)) {
-      await launchUrl(webUri);
-    } else {
-      if (mounted) {
-        _showErrorDialog(context);
-      }
-    }
-  }
-
-  /// Show an alert dialog when launching the map fails.
-  void _showErrorDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text("Error"),
-          content: const Text(
-            "Could not open the map application. Please try again.",
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text("OK"),
-            ),
-          ],
-        );
-      },
     );
   }
 }

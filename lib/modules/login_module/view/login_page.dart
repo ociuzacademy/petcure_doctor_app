@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:petcure_doctor_app/core/theme/app_palette.dart';
 import 'package:petcure_doctor_app/modules/login_module/utils/login_helper.dart';
+import 'package:petcure_doctor_app/modules/registration_module/view/registration_page.dart';
 import 'package:petcure_doctor_app/widgets/buttons/custom_button.dart';
 import 'package:petcure_doctor_app/widgets/text_fields/custom_text_field.dart';
 
@@ -121,6 +122,21 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
       ),
+      persistentFooterButtons: [
+        InkWell(
+          onTap: () =>
+              Navigator.pushReplacement(context, RegistrationPage.route()),
+          child: Text(
+            "Create Account",
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: AppPalette.firstColor,
+            ),
+          ),
+        ),
+      ],
+      persistentFooterAlignment: AlignmentDirectional.center,
     );
   }
 }
