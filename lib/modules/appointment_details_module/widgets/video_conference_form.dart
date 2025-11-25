@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:petcure_doctor_app/core/helpers/app_helpers.dart';
 import 'package:petcure_doctor_app/core/models/slot_model.dart';
 import 'package:petcure_doctor_app/core/theme/app_palette.dart';
-import 'package:petcure_doctor_app/modules/appointment_details_module/typedefs/select_date.dart';
-import 'package:petcure_doctor_app/modules/appointment_details_module/typedefs/select_time_slot.dart';
 import 'package:petcure_doctor_app/widgets/text_fields/custom_text_field.dart';
 
 class VideoConferenceForm extends StatelessWidget {
@@ -22,8 +20,8 @@ class VideoConferenceForm extends StatelessWidget {
   final DateTime? selectedDate;
   final List<SlotModel> slots;
   final SlotModel? selectedTimeSlot;
-  final SelectDate onSelectingDate;
-  final SelectTimeSlot onSelectingTimeSlot;
+  final VoidCallback onSelectingDate;
+  final Function(SlotModel) onSelectingTimeSlot;
   final TextEditingController notesController;
 
   @override
@@ -61,9 +59,7 @@ class VideoConferenceForm extends StatelessWidget {
                   Expanded(
                     child: Text(
                       selectedDate != null
-                          ? AppHelpers.formatBookingDate(
-                              selectedDate!,
-                            ) // Fixed: Use new function
+                          ? AppHelpers.formatBookingDate(selectedDate!)
                           : 'Select a date',
                       style: TextStyle(
                         color: selectedDate != null
@@ -117,9 +113,7 @@ class VideoConferenceForm extends StatelessWidget {
                     ),
                     child: Center(
                       child: Text(
-                        AppHelpers.formatTimeOfDayTo12Hour(
-                          slot.startingTime,
-                        ), // Fixed: This returns String
+                        AppHelpers.formatTimeOfDayTo12Hour(slot.startingTime),
                         style: TextStyle(
                           color: isSelected ? Colors.white : Colors.black,
                           fontWeight: FontWeight.bold,
