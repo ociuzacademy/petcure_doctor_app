@@ -11,7 +11,7 @@ class LoginPage extends StatefulWidget {
   @override
   State<LoginPage> createState() => _LoginPageState();
 
-  static route() => MaterialPageRoute(builder: (context) => LoginPage());
+  static MaterialPageRoute route() => MaterialPageRoute(builder: (context) => const LoginPage());
 }
 
 class _LoginPageState extends State<LoginPage> {
@@ -83,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                     },
                     labelText: 'Email',
                     hintText: 'Enter your email',
-                    textFieldIcon: Icon(Icons.email_outlined),
+                    textFieldIcon: const Icon(Icons.email_outlined),
                     textInputType: TextInputType.emailAddress,
                     focusNode: _emailFocusNode,
                     nextFocusNode: _passwordFocusNode,
@@ -103,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                     },
                     labelText: 'Password',
                     hintText: 'Enter your password',
-                    textFieldIcon: Icon(Icons.password),
+                    textFieldIcon: const Icon(Icons.password),
                     textInputType: TextInputType.visiblePassword,
                     isPassword: true,
                     focusNode: _passwordFocusNode,
@@ -126,8 +126,8 @@ class _LoginPageState extends State<LoginPage> {
         InkWell(
           onTap: () =>
               Navigator.pushReplacement(context, RegistrationPage.route()),
-          child: Text(
-            "Create Account",
+          child: const Text(
+            'Create Account',
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,

@@ -18,7 +18,7 @@ class TreatmentDetailsPage extends StatelessWidget {
 
   const TreatmentDetailsPage({super.key, required this.treatmentRecord});
 
-  static route({required TreatmentRecord treatmentRecord}) => MaterialPageRoute(
+  static MaterialPageRoute route({required TreatmentRecord treatmentRecord}) => MaterialPageRoute(
     builder: (context) =>
         TreatmentDetailsPage(treatmentRecord: treatmentRecord),
   );
@@ -32,8 +32,8 @@ class TreatmentDetailsPage extends StatelessWidget {
         titleTextStyle: Theme.of(
           context,
         ).textTheme.titleLarge?.copyWith(color: AppPalette.whiteColor),
-        iconTheme: IconThemeData(color: AppPalette.whiteColor),
-        actionsIconTheme: IconThemeData(color: AppPalette.whiteColor),
+        iconTheme: const IconThemeData(color: AppPalette.whiteColor),
+        actionsIconTheme: const IconThemeData(color: AppPalette.whiteColor),
         actions: [
           IconButton(
             icon: const Icon(Icons.edit),
@@ -54,7 +54,7 @@ class TreatmentDetailsPage extends StatelessWidget {
             const SizedBox(height: 16),
 
             // Appointment Details
-            SectionTitle(title: 'Appointment Details'),
+            const SectionTitle(title: 'Appointment Details'),
             TreatmentDetailCard(
               children: [
                 TreatmentDetailRow(
@@ -80,7 +80,7 @@ class TreatmentDetailsPage extends StatelessWidget {
             const SizedBox(height: 16),
 
             // Pet Information
-            SectionTitle(title: 'Pet Information'),
+            const SectionTitle(title: 'Pet Information'),
             TreatmentDetailCard(
               children: [
                 TreatmentDetailRow(
@@ -113,7 +113,7 @@ class TreatmentDetailsPage extends StatelessWidget {
             const SizedBox(height: 16),
 
             // Medical Details
-            SectionTitle(title: 'Medical Details'),
+            const SectionTitle(title: 'Medical Details'),
             TreatmentDetailCard(
               children: [
                 TreatmentDetailRow(
@@ -142,7 +142,7 @@ class TreatmentDetailsPage extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SectionTitle(title: 'Additional Notes'),
+                  const SectionTitle(title: 'Additional Notes'),
                   AdditionalNotesCard(treatmentRecord: treatmentRecord),
                   const SizedBox(height: 16),
                 ],

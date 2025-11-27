@@ -20,7 +20,7 @@ class TreatmentHeaderCard extends StatelessWidget {
             CircleAvatar(
               backgroundColor: AppPalette.firstColor.withValues(alpha: 0.2),
               radius: 30,
-              child: Icon(Icons.pets, size: 30, color: AppPalette.firstColor),
+              child: const Icon(Icons.pets, size: 30, color: AppPalette.firstColor),
             ),
             const SizedBox(width: 16),
             Expanded(

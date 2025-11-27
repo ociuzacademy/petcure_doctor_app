@@ -19,8 +19,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
-    final double latitude = 48.85833333;
-    final double longitude = 2.29444444;
+    const double latitude = 48.85833333;
+    const double longitude = 2.29444444;
 
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -40,40 +40,40 @@ class _ProfileWidgetState extends State<ProfileWidget> {
             children: [
               const Icon(Icons.local_hospital, size: 40, color: Colors.blue),
               const SizedBox(height: 10),
-              Text(
+              const Text(
                 'Dr. John Doe',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 8),
-              Row(
+              const Row(
                 children: [
-                  const Icon(Icons.location_on, color: Colors.red),
-                  const SizedBox(width: 5),
+                  Icon(Icons.location_on, color: Colors.red),
+                  SizedBox(width: 5),
                   Expanded(
                     child: Text(
                       '3058 Peck Court, Costa Mesa, California, 92627, United States.',
-                      style: const TextStyle(fontSize: 16),
+                      style: TextStyle(fontSize: 16),
                     ),
                   ),
                 ],
               ),
               const SizedBox(height: 8),
-              Row(
+              const Row(
                 children: [
-                  const Icon(Icons.phone, color: Colors.green),
-                  const SizedBox(width: 5),
-                  Text('+91 9876543210', style: const TextStyle(fontSize: 16)),
+                  Icon(Icons.phone, color: Colors.green),
+                  SizedBox(width: 5),
+                  Text('+91 9876543210', style: TextStyle(fontSize: 16)),
                 ],
               ),
               const SizedBox(height: 8),
-              Row(
+              const Row(
                 children: [
-                  const Icon(Icons.email, color: Colors.orange),
-                  const SizedBox(width: 5),
-                  Text('user@email.com', style: const TextStyle(fontSize: 16)),
+                  Icon(Icons.email, color: Colors.orange),
+                  SizedBox(width: 5),
+                  Text('user@email.com', style: TextStyle(fontSize: 16)),
                 ],
               ),
               const SizedBox(height: 8),
@@ -81,9 +81,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 children: [
                   const Icon(Icons.map, color: Colors.green),
                   const SizedBox(width: 5),
-                  Text(
-                    "Lat: $latitude, Lon: $longitude",
-                    style: const TextStyle(fontSize: 16),
+                  const Text(
+                    'Lat: $latitude, Lon: $longitude',
+                    style: TextStyle(fontSize: 16),
                   ),
                   const Spacer(),
                   IconButton(
@@ -101,10 +101,10 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                   color: Colors.blue[100],
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
+                    Text(
                       "Tomorrow's Bookings:",
                       style: TextStyle(
                         fontSize: 16,
@@ -112,8 +112,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                       ),
                     ),
                     Text(
-                      "10",
-                      style: const TextStyle(
+                      '10',
+                      style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: Colors.blue,

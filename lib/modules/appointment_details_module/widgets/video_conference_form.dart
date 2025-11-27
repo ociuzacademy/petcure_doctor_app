@@ -42,9 +42,9 @@ class VideoConferenceForm extends StatelessWidget {
             const SizedBox(height: 16),
 
             // Date selection
-            Text(
+            const Text(
               'Select Date:',
-              style: const TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
             Container(
@@ -78,9 +78,9 @@ class VideoConferenceForm extends StatelessWidget {
             const SizedBox(height: 16),
 
             // Time slot selection
-            Text(
+            const Text(
               'Select Time Slot:',
-              style: const TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
             GridView.builder(

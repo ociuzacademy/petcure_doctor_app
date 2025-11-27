@@ -57,17 +57,17 @@ class AppHelpers {
   };
 
   static const List<String> bookingReasons = [
-    "Vaccination",
-    "Routine Checkup",
-    "Sickness",
+    'Vaccination',
+    'Routine Checkup',
+    'Sickness',
   ];
 
   static List<SlotModel> generateTimeSlots() {
     final List<SlotModel> slots = [];
 
     // Convert start and end times to minutes since midnight
-    final int startMinutes = 9 * 60; // 09:00 AM
-    final int endMinutes = 16 * 60; // 04:00 PM (16:00)
+    const int startMinutes = 9 * 60; // 09:00 AM
+    const int endMinutes = 16 * 60; // 04:00 PM (16:00)
 
     // Generate slots in 30-minute intervals
     for (int minutes = startMinutes; minutes < endMinutes; minutes += 30) {

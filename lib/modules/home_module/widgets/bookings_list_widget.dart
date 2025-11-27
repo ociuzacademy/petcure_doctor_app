@@ -34,7 +34,7 @@ class _BookingsListWidgetState extends State<BookingsListWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             "Today's Bookings",
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
@@ -52,7 +52,7 @@ class _BookingsListWidgetState extends State<BookingsListWidget> {
                   getSubtitle: _bookingListHelper.getSubtitle,
                 );
               },
-              separatorBuilder: (_, __) => const SizedBox(height: 8),
+              separatorBuilder: (_, _) => const SizedBox(height: 8),
             ),
           ),
         ],

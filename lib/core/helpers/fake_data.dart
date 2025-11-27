@@ -178,7 +178,7 @@ class FakeData {
       'Sickness',
     ];
 
-    final List<BookingOption> bookingOptions = BookingOption.values;
+    const List<BookingOption> bookingOptions = BookingOption.values;
 
     final List<Booking> bookings = [];
     final DateTime now = DateTime.now();
@@ -306,7 +306,7 @@ class FakeData {
       'Sickness',
     ];
 
-    final List<BookingOption> bookingOptions = BookingOption.values;
+    const List<BookingOption> bookingOptions = BookingOption.values;
 
     final List<String> healthConditions = [
       'None',
@@ -448,7 +448,7 @@ class FakeData {
   }) {
     final Random random = Random();
     final List<SlotModel> slots = AppHelpers.generateTimeSlots();
-    final List<BookingOption> bookingOptions = BookingOption.values;
+    const List<BookingOption> bookingOptions = BookingOption.values;
     final List<String> clinicalReasons = [
       'Vaccination',
       'Routine Checkup',

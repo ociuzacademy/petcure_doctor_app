@@ -14,8 +14,8 @@ import 'package:petcure_doctor_app/widgets/snackbars/custom_snack_bar.dart';
 class TreatmentListPage extends StatefulWidget {
   const TreatmentListPage({super.key});
 
-  static route() =>
-      MaterialPageRoute(builder: (context) => TreatmentListPage());
+  static MaterialPageRoute route() =>
+      MaterialPageRoute(builder: (context) => const TreatmentListPage());
 
   @override
   State<TreatmentListPage> createState() => _TreatmentListPageState();
@@ -59,8 +59,8 @@ class _TreatmentListPageState extends State<TreatmentListPage> {
         titleTextStyle: Theme.of(
           context,
         ).textTheme.titleLarge?.copyWith(color: AppPalette.whiteColor),
-        iconTheme: IconThemeData(color: AppPalette.whiteColor),
-        actionsIconTheme: IconThemeData(color: AppPalette.whiteColor),
+        iconTheme: const IconThemeData(color: AppPalette.whiteColor),
+        actionsIconTheme: const IconThemeData(color: AppPalette.whiteColor),
         actions: [
           IconButton(
             icon: const Icon(Icons.calendar_today),

@@ -8,9 +8,9 @@ class ProfileHelper {
 
   /// Open Google Maps in the default map application or show an error dialog if it fails.
   Future<void> openGoogleMaps(double lat, double lon) async {
-    final Uri googleMapsUri = Uri.parse("geo:$lat,$lon?q=$lat,$lon");
+    final Uri googleMapsUri = Uri.parse('geo:$lat,$lon?q=$lat,$lon');
     final Uri webUri = Uri.parse(
-      "https://www.google.com/maps/search/?api=1&query=$lat,$lon",
+      'https://www.google.com/maps/search/?api=1&query=$lat,$lon',
     );
 
     if (await canLaunchUrl(googleMapsUri)) {
@@ -30,14 +30,14 @@ class ProfileHelper {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text("Error"),
+          title: const Text('Error'),
           content: const Text(
-            "Could not open the map application. Please try again.",
+            'Could not open the map application. Please try again.',
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text("OK"),
+              child: const Text('OK'),
             ),
           ],
         );

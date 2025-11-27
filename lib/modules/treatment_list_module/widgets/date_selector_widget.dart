@@ -55,7 +55,7 @@ class DateSelectorWidget extends StatelessWidget {
                     backgroundColor: AppPalette.firstColor.withValues(
                       alpha: 0.1,
                     ),
-                    labelStyle: TextStyle(
+                    labelStyle: const TextStyle(
                       color: AppPalette.firstColor,
                       fontWeight: FontWeight.bold,
                     ),

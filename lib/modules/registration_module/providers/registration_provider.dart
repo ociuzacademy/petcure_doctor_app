@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:petcure_doctor_app/modules/registration_module/classes/doctor_registration_data.dart';
 
 class RegistrationProvider with ChangeNotifier {
   // Form key
@@ -31,13 +32,11 @@ class RegistrationProvider with ChangeNotifier {
 
   // Loading states
   bool _isLoadingLocation = false;
-  bool _isRegistering = false;
 
   // Getters
   File? get profileImage => _profileImage;
   File? get idCardImage => _idCardImage;
   bool get isLoadingLocation => _isLoadingLocation;
-  bool get isRegistering => _isRegistering;
 
   // Setters
   void setProfileImage(File? image) {
@@ -52,11 +51,6 @@ class RegistrationProvider with ChangeNotifier {
 
   void setLoadingLocation(bool loading) {
     _isLoadingLocation = loading;
-    notifyListeners();
-  }
-
-  void setRegistering(bool registering) {
-    _isRegistering = registering;
     notifyListeners();
   }
 
@@ -203,6 +197,24 @@ class RegistrationProvider with ChangeNotifier {
         _idCardImage != null;
   }
 
+  DoctorRegistrationData? get doctorRegistrationData {
+    if (!isFormComplete) {
+      return null;
+    }
+
+    return DoctorRegistrationData(
+      fullName: fullNameController.text.trim(),
+      email: emailController.text.trim(),
+      phoneNumber: phoneNumberController.text.trim(),
+      password: passwordController.text.trim(),
+      address: addressController.text.trim(),
+      latitude: double.parse(latitudeController.text.trim()),
+      longitude: double.parse(longitudeController.text.trim()),
+      image: _profileImage!,
+      idCard: _idCardImage!,
+    );
+  }
+
   // Clear all form data
   void clearForm() {
     fullNameController.clear();
@@ -215,7 +227,6 @@ class RegistrationProvider with ChangeNotifier {
     _profileImage = null;
     _idCardImage = null;
     _isLoadingLocation = false;
-    _isRegistering = false;
     notifyListeners();
   }
 

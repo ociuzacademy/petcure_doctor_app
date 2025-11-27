@@ -36,7 +36,7 @@ class BookingCard extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Owner: ${booking.pet.ownerName}"),
+            Text('Owner: ${booking.pet.ownerName}'),
             const SizedBox(height: 2),
             Text(
               getSubtitle(booking),

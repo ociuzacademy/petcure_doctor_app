@@ -19,7 +19,7 @@ class AppointmentDetailsPage extends StatefulWidget {
   @override
   State<AppointmentDetailsPage> createState() => _AppointmentDetailsPageState();
 
-  static route({required Booking booking}) => MaterialPageRoute(
+  static MaterialPageRoute route({required Booking booking}) => MaterialPageRoute(
     builder: (context) => AppointmentDetailsPage(booking: booking),
   );
 }
