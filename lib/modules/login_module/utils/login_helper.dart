@@ -1,7 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:petcure_doctor_app/core/exports/bloc_exports.dart';
 
-import 'package:petcure_doctor_app/modules/home_module/view/home_page.dart';
 import 'package:petcure_doctor_app/widgets/snackbars/custom_snack_bar.dart';
 
 class LoginHelper {
@@ -21,27 +22,11 @@ class LoginHelper {
     if (formKey.currentState!.validate()) {
       final email = emailController.text.trim();
       final password = passwordController.text.trim();
-      if (email == 'user@email.com') {
-        if (password == 'pass') {
-          CustomSnackBar.showSuccess(
-            context,
-            message: 'User logged in successfully',
-          );
 
-          Navigator.pushAndRemoveUntil(
-            context,
-            HomePage.route(),
-            (route) => false,
-          );
-        } else {
-          CustomSnackBar.showError(context, message: 'Invalid password');
-        }
-      } else {
-        CustomSnackBar.showError(
-          context,
-          message: 'Invalid email and/or password',
-        );
-      }
+      final LoginBloc loginBloc = context.read<LoginBloc>();
+      loginBloc.add(
+        LoginEvent.doctorLoggingIn(email: email, password: password),
+      );
     } else {
       CustomSnackBar.showError(
         context,

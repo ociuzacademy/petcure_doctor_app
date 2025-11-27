@@ -13,7 +13,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider(create: (context) => RegisterBloc())],
+      providers: [
+        BlocProvider(create: (context) => RegisterBloc()),
+        BlocProvider(create: (context) => LoginBloc()),
+      ],
       child: MaterialApp(
         title: 'Petcure Doctor App',
         debugShowCheckedModeBanner: false,
