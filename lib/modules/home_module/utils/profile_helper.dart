@@ -1,10 +1,19 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:petcure_doctor_app/core/exports/bloc_exports.dart';
+import 'package:petcure_doctor_app/widgets/snackbars/custom_snack_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProfileHelper {
   final BuildContext context;
   ProfileHelper({required this.context});
+
+  void doctorProfileInit() {
+    final DoctorProfileCubit doctorProfileCubit = context
+        .read<DoctorProfileCubit>();
+    doctorProfileCubit.getDoctorProfileData();
+  }
 
   /// Open Google Maps in the default map application or show an error dialog if it fails.
   Future<void> openGoogleMaps(double lat, double lon) async {
@@ -19,29 +28,11 @@ class ProfileHelper {
       await launchUrl(webUri);
     } else {
       if (context.mounted) {
-        showErrorDialog();
+        CustomSnackBar.showError(
+          context,
+          message: 'Could not open the map application. Please try again.',
+        );
       }
     }
-  }
-
-  /// Show an alert dialog when launching the map fails.
-  void showErrorDialog() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Error'),
-          content: const Text(
-            'Could not open the map application. Please try again.',
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('OK'),
-            ),
-          ],
-        );
-      },
-    );
   }
 }

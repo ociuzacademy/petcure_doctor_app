@@ -28,13 +28,13 @@ class AuthStorageFunctions {
     }
   }
 
-  static Future<int> getAgentId() async {
+  static Future<int> getDoctorId() async {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       final int? userId = prefs.getInt(AuthStorageKeys.userId);
       return userId ?? 0;
     } catch (e) {
-      throw GetUserIdStorageException('Unable to retrieve user ID', e);
+      throw GetUserIdStorageException('Unable to retrieve doctor ID', e);
     }
   }
 

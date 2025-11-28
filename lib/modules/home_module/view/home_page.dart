@@ -11,7 +11,8 @@ class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 
-  static MaterialPageRoute route() => MaterialPageRoute(builder: (context) => const HomePage());
+  static MaterialPageRoute route() =>
+      MaterialPageRoute(builder: (context) => const HomePage());
 }
 
 class _HomePageState extends State<HomePage> {

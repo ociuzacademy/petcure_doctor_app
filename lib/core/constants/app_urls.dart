@@ -6,6 +6,6 @@ class AppUrls {
 
   static const String loginUrl = '$doctorUrl/login/';
 
-  static const String getProfileUrl = '$doctorUrl/doctor_profile/';
+  static const String getDoctorProfileUrl = '$doctorUrl/doctor_profile/';
   static const String updateProfileUrl = '$doctorUrl/update-profile/';
 }
