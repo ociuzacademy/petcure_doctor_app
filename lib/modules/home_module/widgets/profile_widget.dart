@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petcure_doctor_app/core/constants/app_urls.dart';
 import 'package:petcure_doctor_app/core/exports/bloc_exports.dart';
+import 'package:petcure_doctor_app/core/theme/app_palette.dart';
 import 'package:petcure_doctor_app/modules/home_module/utils/profile_helper.dart';
 import 'package:petcure_doctor_app/modules/home_module/widgets/i_d_card_with_fallback.dart';
 import 'package:petcure_doctor_app/modules/home_module/widgets/profile_detail_row.dart';
 import 'package:petcure_doctor_app/modules/home_module/widgets/profile_image_with_fallback.dart';
+import 'package:petcure_doctor_app/modules/update_profile_module/view/update_profile_page.dart';
+import 'package:petcure_doctor_app/widgets/buttons/custom_button.dart';
 import 'package:petcure_doctor_app/widgets/custom_error_widget.dart';
 import 'package:petcure_doctor_app/widgets/loaders/custom_loading_widget.dart';
 
@@ -160,6 +163,16 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                             );
                           },
                         ),
+                      ),
+                      const Spacer(),
+                      CustomButton(
+                        buttonWidth: double.infinity,
+                        backgroundColor: AppPalette.firstColor,
+                        textColor: AppPalette.whiteColor,
+                        labelText: 'Update Profile',
+                        onClick: () {
+                          Navigator.push(context, UpdateProfilePage.route());
+                        },
                       ),
                     ],
                   ),

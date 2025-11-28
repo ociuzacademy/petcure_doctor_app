@@ -266,12 +266,12 @@ $DoctorProfileSuccessCopyWith<DoctorProfileSuccess> get copyWith => _$DoctorProf
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DoctorProfileSuccess&&const DeepCollectionEquality().equals(other.profileData, profileData));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DoctorProfileSuccess&&(identical(other.profileData, profileData) || other.profileData == profileData));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(profileData));
+int get hashCode => Object.hash(runtimeType,profileData);
 
 @override
 String toString() {
@@ -303,9 +303,9 @@ class _$DoctorProfileSuccessCopyWithImpl<$Res>
 
 /// Create a copy of DoctorProfileState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? profileData = freezed,}) {
+@pragma('vm:prefer-inline') $Res call({Object? profileData = null,}) {
   return _then(DoctorProfileSuccess(
-profileData: freezed == profileData ? _self.profileData : profileData // ignore: cast_nullable_to_non_nullable
+profileData: null == profileData ? _self.profileData : profileData // ignore: cast_nullable_to_non_nullable
 as DoctorProfileModel,
   ));
 }
