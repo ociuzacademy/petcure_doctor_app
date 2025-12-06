@@ -1,13 +1,11 @@
 // appointment_details_provider.dart
 import 'package:flutter/material.dart';
-import 'package:petcure_doctor_app/core/enums/booking_option.dart';
+import 'package:petcure_doctor_app/core/enums/appointment_type.dart';
 import 'package:petcure_doctor_app/core/helpers/app_helpers.dart';
-import 'package:petcure_doctor_app/core/models/booking.dart';
 import 'package:petcure_doctor_app/core/models/slot_model.dart';
+import 'package:petcure_doctor_app/modules/appointment_details_module/models/appointment_details_model.dart';
 
 class AppointmentDetailsProvider with ChangeNotifier {
-  final Booking booking;
-
   // Text controllers
   final TextEditingController weightController = TextEditingController();
   final TextEditingController verdictController = TextEditingController();
@@ -18,7 +16,9 @@ class AppointmentDetailsProvider with ChangeNotifier {
 
   // Date and time selection
   DateTime? _selectedDate;
-  SlotModel? _selectedTimeSlot;
+  SlotDetails? _selectedTimeSlot;
+
+  AppointmentType? _appointmentType;
 
   // Loading state
   bool _isSubmitting = false;
@@ -26,17 +26,10 @@ class AppointmentDetailsProvider with ChangeNotifier {
   // Available time slots
   final List<SlotModel> slots = AppHelpers.generateTimeSlots();
 
-  AppointmentDetailsProvider({required this.booking}) {
-    // Pre-fill date and time slot if it's a clinical appointment
-    if (booking.bookingOption == BookingOption.clinicalAppointment) {
-      _selectedDate = booking.bookingDate;
-      _selectedTimeSlot = booking.timeSlot;
-    }
-  }
-
   // Getters
   DateTime? get selectedDate => _selectedDate;
-  SlotModel? get selectedTimeSlot => _selectedTimeSlot;
+  SlotDetails? get selectedTimeSlot => _selectedTimeSlot;
+  AppointmentType? get appointmentType => _appointmentType;
   bool get isSubmitting => _isSubmitting;
   List<SlotModel> get availableSlots => slots;
 
@@ -46,13 +39,18 @@ class AppointmentDetailsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void setSelectedTimeSlot(SlotModel? slot) {
+  void setSelectedTimeSlot(SlotDetails? slot) {
     _selectedTimeSlot = slot;
     notifyListeners();
   }
 
   void setSubmitting(bool submitting) {
     _isSubmitting = submitting;
+    notifyListeners();
+  }
+
+  void setAppointmentType(AppointmentType type) {
+    _appointmentType = type;
     notifyListeners();
   }
 
@@ -104,7 +102,7 @@ class AppointmentDetailsProvider with ChangeNotifier {
 
   // Check if form is valid
   bool validateForm() {
-    if (booking.bookingOption == BookingOption.clinicalAppointment) {
+    if (_appointmentType == AppointmentType.clinicalAppointment) {
       return formKey.currentState?.validate() ?? false;
     } else {
       return formKey.currentState?.validate() ?? false;
@@ -123,7 +121,7 @@ class AppointmentDetailsProvider with ChangeNotifier {
       // Simulate API call
       await Future.delayed(const Duration(seconds: 2));
 
-      if (booking.bookingOption == BookingOption.clinicalAppointment) {
+      if (_appointmentType == AppointmentType.clinicalAppointment) {
         _handleClinicalAppointmentSubmission();
       } else {
         _handleVideoConferenceSubmission();

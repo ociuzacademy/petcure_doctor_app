@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:petcure_doctor_app/modules/appointment_details_module/view/appointment_details_page.dart';
 
 import 'package:petcure_doctor_app/modules/home_module/models/today_bookings_model.dart';
 import 'package:petcure_doctor_app/modules/home_module/typedefs/get_status_color.dart';
@@ -52,10 +53,10 @@ class BookingCard extends StatelessWidget {
           ),
         ),
         onTap: () {
-          // Navigator.push(
-          //   context,
-          //   AppointmentDetailsPage.route(booking: booking),
-          // );
+          Navigator.push(
+            context,
+            AppointmentDetailsPage.route(bookingId: booking.appointmentId),
+          );
         },
       ),
     );

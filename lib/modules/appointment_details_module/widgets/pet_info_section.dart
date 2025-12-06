@@ -1,12 +1,14 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:petcure_doctor_app/core/models/pet.dart';
+import 'package:petcure_doctor_app/core/constants/app_urls.dart';
+import 'package:petcure_doctor_app/modules/appointment_details_module/models/appointment_details_model.dart';
 
 class PetInfoSection extends StatelessWidget {
   const PetInfoSection({super.key, required this.pet});
 
-  final Pet pet;
+  final PetDetails pet;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,9 @@ class PetInfoSection extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 30,
-                  backgroundImage: NetworkImage(pet.photoUrl),
+                  backgroundImage: CachedNetworkImageProvider(
+                    '${AppUrls.baseUrl}${pet.image}',
+                  ),
                   onBackgroundImageError: (exception, stackTrace) =>
                       const Icon(Icons.pets, size: 30),
                 ),
@@ -55,10 +59,10 @@ class PetInfoSection extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text('Owner: ${pet.ownerName}'),
-            if (pet.healthConditions != null) ...[
+            if (pet.healthCondition != null) ...[
               const SizedBox(height: 8),
               Text(
-                'Health Conditions: ${pet.healthConditions}',
+                'Health Conditions: ${pet.healthCondition}',
                 style: const TextStyle(color: Colors.red),
               ),
             ],

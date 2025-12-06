@@ -10,4 +10,5 @@ class AppUrls {
   static const String updateProfileUrl = '$doctorUrl/update-profile/';
 
   static const String todayBookingsUrl = '$doctorUrl/today_bookings/';
+  static const String bookingDetailsUrl = '$doctorUrl/booking_details/';
 }
