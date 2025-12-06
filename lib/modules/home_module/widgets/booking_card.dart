@@ -1,9 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
-import 'package:petcure_doctor_app/core/helpers/app_helpers.dart';
-import 'package:petcure_doctor_app/core/models/booking.dart';
-import 'package:petcure_doctor_app/modules/appointment_details_module/view/appointment_details_page.dart';
+import 'package:petcure_doctor_app/modules/home_module/models/today_bookings_model.dart';
 import 'package:petcure_doctor_app/modules/home_module/typedefs/get_status_color.dart';
 import 'package:petcure_doctor_app/modules/home_module/typedefs/get_status_icon.dart';
 import 'package:petcure_doctor_app/modules/home_module/typedefs/get_booking_text.dart';
@@ -36,7 +34,7 @@ class BookingCard extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Owner: ${booking.pet.ownerName}'),
+            Text('Owner: ${booking.pet.name}'),
             const SizedBox(height: 2),
             Text(
               getSubtitle(booking),
@@ -46,28 +44,18 @@ class BookingCard extends StatelessWidget {
             ),
           ],
         ),
-        trailing: booking.timeSlot != null
-            ? Text(
-                AppHelpers.formatTimeOfDayTo12Hour(
-                  booking.timeSlot!.startingTime,
-                ),
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue,
-                ),
-              )
-            : const Text(
-                'Flexible',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.green,
-                ),
-              ),
+        trailing: Text(
+          booking.slot,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.blue,
+          ),
+        ),
         onTap: () {
-          Navigator.push(
-            context,
-            AppointmentDetailsPage.route(booking: booking),
-          );
+          // Navigator.push(
+          //   context,
+          //   AppointmentDetailsPage.route(booking: booking),
+          // );
         },
       ),
     );

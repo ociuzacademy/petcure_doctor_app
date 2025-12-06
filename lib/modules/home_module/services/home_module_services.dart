@@ -6,17 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:petcure_doctor_app/core/constants/app_constants.dart';
 import 'package:petcure_doctor_app/core/constants/app_urls.dart';
-import 'package:petcure_doctor_app/core/models/api_models/doctor_profile_model.dart';
+import 'package:petcure_doctor_app/modules/home_module/models/today_bookings_model.dart';
 
-class AppServices {
-  static Future<DoctorProfileModel> getUserProfileData({
+class HomeModuleServices {
+  static Future<TodayBookingsModel> getTodayBookings({
     required int doctorId,
   }) async {
     try {
       final Map<String, dynamic> params = {'doctor_id': doctorId.toString()};
 
       final url = Uri.parse(
-        AppUrls.getDoctorProfileUrl,
+        AppUrls.todayBookingsUrl,
       ).replace(queryParameters: params);
 
       final resp = await http
@@ -37,7 +37,7 @@ class AppServices {
 
       if (resp.statusCode == 200) {
         final dynamic decoded = jsonDecode(resp.body);
-        final response = DoctorProfileModel.fromJson(decoded);
+        final response = TodayBookingsModel.fromJson(decoded);
 
         return response;
       } else {
@@ -45,7 +45,7 @@ class AppServices {
         throw Exception(errorResponse['message'] ?? 'Unknown error');
       }
     } on TimeoutException catch (e) {
-      debugPrint('AppServices: Request timeout - $e');
+      debugPrint('HomeModuleServices: Request timeout - $e');
       throw Exception(
         'Request timeout. Please check your internet connection and try again.',
       );

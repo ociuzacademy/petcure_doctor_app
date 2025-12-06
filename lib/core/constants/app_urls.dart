@@ -8,4 +8,6 @@ class AppUrls {
 
   static const String getDoctorProfileUrl = '$doctorUrl/doctor_profile/';
   static const String updateProfileUrl = '$doctorUrl/update-profile/';
+
+  static const String todayBookingsUrl = '$doctorUrl/today_bookings/';
 }

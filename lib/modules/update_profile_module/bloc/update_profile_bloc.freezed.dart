@@ -222,12 +222,12 @@ _$UpdatingDoctorProfileCopyWith<_UpdatingDoctorProfile> get copyWith => __$Updat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UpdatingDoctorProfile&&const DeepCollectionEquality().equals(other.updateProfileData, updateProfileData));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UpdatingDoctorProfile&&(identical(other.updateProfileData, updateProfileData) || other.updateProfileData == updateProfileData));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(updateProfileData));
+int get hashCode => Object.hash(runtimeType,updateProfileData);
 
 @override
 String toString() {
@@ -259,9 +259,9 @@ class __$UpdatingDoctorProfileCopyWithImpl<$Res>
 
 /// Create a copy of UpdateProfileEvent
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? updateProfileData = freezed,}) {
+@pragma('vm:prefer-inline') $Res call({Object? updateProfileData = null,}) {
   return _then(_UpdatingDoctorProfile(
-freezed == updateProfileData ? _self.updateProfileData : updateProfileData // ignore: cast_nullable_to_non_nullable
+null == updateProfileData ? _self.updateProfileData : updateProfileData // ignore: cast_nullable_to_non_nullable
 as UpdateProfileData,
   ));
 }
@@ -524,12 +524,12 @@ $UpdateProfileSuccessCopyWith<UpdateProfileSuccess> get copyWith => _$UpdateProf
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateProfileSuccess&&const DeepCollectionEquality().equals(other.response, response));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateProfileSuccess&&(identical(other.response, response) || other.response == response));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(response));
+int get hashCode => Object.hash(runtimeType,response);
 
 @override
 String toString() {
@@ -561,9 +561,9 @@ class _$UpdateProfileSuccessCopyWithImpl<$Res>
 
 /// Create a copy of UpdateProfileState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? response = freezed,}) {
+@pragma('vm:prefer-inline') $Res call({Object? response = null,}) {
   return _then(UpdateProfileSuccess(
-freezed == response ? _self.response : response // ignore: cast_nullable_to_non_nullable
+null == response ? _self.response : response // ignore: cast_nullable_to_non_nullable
 as DoctorProfileUpdateResponseModel,
   ));
 }
