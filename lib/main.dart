@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => UpdateProfileBloc()),
         BlocProvider(create: (context) => TodayBookingsCubit()),
         BlocProvider(create: (context) => AppointmentDetailsCubit()),
+        BlocProvider(create: (context) => CompleteAppointmentBloc()),
       ],
       child: MaterialApp(
         title: 'Petcure Doctor App',

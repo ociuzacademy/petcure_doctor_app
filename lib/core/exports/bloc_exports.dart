@@ -4,3 +4,4 @@ export 'package:petcure_doctor_app/core/cubits/doctor_profile/doctor_profile_cub
 export 'package:petcure_doctor_app/modules/update_profile_module/bloc/update_profile_bloc.dart';
 export 'package:petcure_doctor_app/modules/home_module/cubit/today_bookings_cubit.dart';
 export 'package:petcure_doctor_app/modules/appointment_details_module/cubit/appointment_details_cubit.dart';
+export 'package:petcure_doctor_app/modules/appointment_details_module/bloc/complete_appointment_bloc.dart';

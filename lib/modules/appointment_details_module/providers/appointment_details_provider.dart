@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:petcure_doctor_app/core/enums/appointment_type.dart';
 import 'package:petcure_doctor_app/core/helpers/app_helpers.dart';
 import 'package:petcure_doctor_app/core/models/slot_model.dart';
+import 'package:petcure_doctor_app/modules/appointment_details_module/classes/complete_appointment_data.dart';
 import 'package:petcure_doctor_app/modules/appointment_details_module/models/appointment_details_model.dart';
 
 class AppointmentDetailsProvider with ChangeNotifier {
+  final int bookingId;
   // Text controllers
   final TextEditingController weightController = TextEditingController();
   final TextEditingController verdictController = TextEditingController();
@@ -25,6 +27,8 @@ class AppointmentDetailsProvider with ChangeNotifier {
 
   // Available time slots
   final List<SlotModel> slots = AppHelpers.generateTimeSlots();
+
+  AppointmentDetailsProvider({required this.bookingId});
 
   // Getters
   DateTime? get selectedDate => _selectedDate;
@@ -54,19 +58,6 @@ class AppointmentDetailsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // Date selection method
-  Future<void> selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(const Duration(days: 30)),
-    );
-    if (picked != null) {
-      setSelectedDate(picked);
-    }
-  }
-
   // Validation methods
   String? validateWeight(String? value) {
     if (value == null || value.isEmpty) {
@@ -93,59 +84,23 @@ class AppointmentDetailsProvider with ChangeNotifier {
     return null; // Notes are optional
   }
 
-  String? validateVideoConference() {
-    if (_selectedDate == null || _selectedTimeSlot == null) {
-      return 'Please select both date and time slot';
-    }
-    return null;
-  }
-
   // Check if form is valid
   bool validateForm() {
-    if (_appointmentType == AppointmentType.clinicalAppointment) {
-      return formKey.currentState?.validate() ?? false;
-    } else {
-      return formKey.currentState?.validate() ?? false;
-    }
+    return formKey.currentState?.validate() ?? false;
   }
 
-  // Form submission
-  Future<void> submitForm(BuildContext context) async {
+  CompleteAppointmentData? getCompleteAppointmentData() {
     if (!validateForm()) {
-      throw Exception('Please fill all the required fields');
+      return null;
     }
 
-    setSubmitting(true);
-
-    try {
-      // Simulate API call
-      await Future.delayed(const Duration(seconds: 2));
-
-      if (_appointmentType == AppointmentType.clinicalAppointment) {
-        _handleClinicalAppointmentSubmission();
-      } else {
-        _handleVideoConferenceSubmission();
-      }
-    } finally {
-      setSubmitting(false);
-    }
-  }
-
-  void _handleClinicalAppointmentSubmission() {
-    final weight = weightController.text.trim();
-    final verdict = verdictController.text.trim();
-    final notes = notesController.text.trim();
-
-    debugPrint(
-      'Clinical Appointment - Weight: $weight, Verdict: $verdict, Notes: $notes',
-    );
-  }
-
-  void _handleVideoConferenceSubmission() {
-    final notes = notesController.text;
-
-    debugPrint(
-      'Video Conference - Date: $_selectedDate, Slot: $_selectedTimeSlot, Notes: $notes',
+    return CompleteAppointmentData(
+      bookingId: bookingId,
+      weight: double.parse(weightController.text.trim()),
+      diagnosisAndVerdict: verdictController.text.trim(),
+      notes: notesController.text.trim().isNotEmpty
+          ? notesController.text.trim()
+          : null,
     );
   }
 

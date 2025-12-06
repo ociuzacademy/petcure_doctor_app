@@ -11,4 +11,7 @@ class AppUrls {
 
   static const String todayBookingsUrl = '$doctorUrl/today_bookings/';
   static const String bookingDetailsUrl = '$doctorUrl/booking_details/';
+
+  static const String completeAppointmentsUrl =
+      '$doctorUrl/complete_appointments/';
 }
