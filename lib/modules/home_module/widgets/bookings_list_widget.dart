@@ -41,34 +41,46 @@ class _BookingsListWidgetState extends State<BookingsListWidget> {
                 horizontal: screenSize.width * 0.05,
                 vertical: screenSize.height * 0.01,
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "Today's Bookings",
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 10),
-                  Expanded(
-                    child: ListView.separated(
-                      itemCount: todayBookings.totalBookings,
-                      itemBuilder: (context, index) {
-                        final booking = todayBookings.bookings[index];
+              child: todayBookings.bookings.isEmpty
+                  ? const Center(
+                      child: Text(
+                        'No bookings available for today.',
+                        style: TextStyle(fontSize: 16, color: Colors.grey),
+                      ),
+                    )
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Today's Bookings",
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Expanded(
+                          child: ListView.separated(
+                            itemCount: todayBookings.totalBookings,
+                            itemBuilder: (context, index) {
+                              final booking = todayBookings.bookings[index];
 
-                        return BookingCard(
-                          booking: booking,
-                          getStatusColor: BookingListHelper.getStatusColor,
-                          getStatusIcon: BookingListHelper.getStatusIcon,
-                          getSubtitle: BookingListHelper.getSubtitle,
-                        );
-                      },
-                      separatorBuilder: (_, _) => const SizedBox(height: 8),
+                              return BookingCard(
+                                booking: booking,
+                                getStatusColor:
+                                    BookingListHelper.getStatusColor,
+                                getStatusIcon: BookingListHelper.getStatusIcon,
+                                getSubtitle: BookingListHelper.getSubtitle,
+                              );
+                            },
+                            separatorBuilder: (_, _) =>
+                                const SizedBox(height: 8),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
             );
-          case TodayBookingsError(message: final message):
+          case TodayBookingsError(:final message):
             return CustomErrorWidget(
               onRetry: _bookingListHelper.showBookingsInit,
               errorMessage: message,

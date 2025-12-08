@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:petcure_doctor_app/core/helpers/app_helpers.dart';
-import 'package:petcure_doctor_app/core/models/treatment_record.dart';
 import 'package:petcure_doctor_app/core/theme/app_palette.dart';
 import 'package:petcure_doctor_app/modules/treatment_list_module/typedefs/filter_treatment_recordes.dart';
 import 'package:petcure_doctor_app/widgets/select_date_widget.dart';
@@ -10,12 +9,12 @@ import 'package:petcure_doctor_app/widgets/select_date_widget.dart';
 class DateSelectorWidget extends StatelessWidget {
   final DateTime? selectedDate;
   final FilterTreatmentRecordes onSelectingDate;
-  final List<TreatmentRecord> filteredRecords;
+  final int recordsCount;
   const DateSelectorWidget({
     super.key,
     this.selectedDate,
     required this.onSelectingDate,
-    required this.filteredRecords,
+    required this.recordsCount,
   });
 
   @override
@@ -51,7 +50,7 @@ class DateSelectorWidget extends StatelessWidget {
                     ),
                   ),
                   Chip(
-                    label: Text('${filteredRecords.length} records'),
+                    label: Text('$recordsCount records'),
                     backgroundColor: AppPalette.firstColor.withValues(
                       alpha: 0.1,
                     ),

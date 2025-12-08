@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:petcure_doctor_app/core/enums/booking_option.dart';
+import 'package:petcure_doctor_app/core/enums/appointment_type.dart';
 import 'package:petcure_doctor_app/core/models/age.dart';
 import 'package:petcure_doctor_app/core/models/slot_model.dart';
 import 'package:petcure_doctor_app/core/theme/app_palette.dart';
@@ -111,21 +111,21 @@ class AppHelpers {
     return DateFormat('hh:mm a').format(dateTime);
   }
 
-  static Color getBookingOptionColor(BookingOption option) {
+  static Color getAppointmentTypeColor(AppointmentType option) {
     switch (option) {
-      case BookingOption.clinicalAppointment:
+      case AppointmentType.clinicalAppointment:
         return AppPalette.blueColor;
-      case BookingOption.videoConference:
+      case AppointmentType.audioCall:
         return AppPalette.greenColor;
     }
   }
 
-  static String getBookingOptionText(BookingOption option) {
+  static String getAppointmentTypeText(AppointmentType option) {
     switch (option) {
-      case BookingOption.clinicalAppointment:
+      case AppointmentType.clinicalAppointment:
         return 'Clinical';
-      case BookingOption.videoConference:
-        return 'Video';
+      case AppointmentType.audioCall:
+        return 'Audio';
     }
   }
 }

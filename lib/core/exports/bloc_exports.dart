@@ -5,3 +5,5 @@ export 'package:petcure_doctor_app/modules/update_profile_module/bloc/update_pro
 export 'package:petcure_doctor_app/modules/home_module/cubit/today_bookings_cubit.dart';
 export 'package:petcure_doctor_app/modules/appointment_details_module/cubit/appointment_details_cubit.dart';
 export 'package:petcure_doctor_app/modules/appointment_details_module/bloc/complete_appointment_bloc.dart';
+export 'package:petcure_doctor_app/modules/treatment_list_module/cubit/treatment_history_cubit.dart';
+export 'package:petcure_doctor_app/modules/treatment_details_module/cubit/treatment_details_cubit.dart';

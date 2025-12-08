@@ -1,19 +1,18 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-
-import 'package:petcure_doctor_app/core/helpers/app_helpers.dart';
-import 'package:petcure_doctor_app/core/models/treatment_record.dart';
 import 'package:petcure_doctor_app/modules/treatment_details_module/view/treatment_details_page.dart';
+
+import 'package:petcure_doctor_app/modules/treatment_list_module/models/treatment_history_model.dart';
 import 'package:petcure_doctor_app/modules/treatment_list_module/typedefs/get_booking_option_color.dart';
 import 'package:petcure_doctor_app/modules/treatment_list_module/typedefs/get_booking_option_text.dart';
 
 class TreatmentRecordCard extends StatelessWidget {
-  final TreatmentRecord record;
+  final Treatment treatment;
   final GetBookingOptionText getBookingOptionText;
   final GetBookingOptionColor getBookingOptionColor;
   const TreatmentRecordCard({
     super.key,
-    required this.record,
+    required this.treatment,
     required this.getBookingOptionText,
     required this.getBookingOptionColor,
   });
@@ -28,7 +27,7 @@ class TreatmentRecordCard extends StatelessWidget {
           // Navigate to details page when tapped
           Navigator.push(
             context,
-            TreatmentDetailsPage.route(treatmentRecord: record),
+            TreatmentDetailsPage.route(treatmentId: treatment.id),
           );
         },
         child: Padding(
@@ -45,7 +44,7 @@ class TreatmentRecordCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          record.petName,
+                          treatment.petName,
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
@@ -55,7 +54,7 @@ class TreatmentRecordCard extends StatelessWidget {
                         ),
                         const SizedBox(height: 2),
                         Text(
-                          'Owner: ${record.ownerName}',
+                          'Owner: ${treatment.petOwner}',
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.grey[600],
@@ -70,9 +69,7 @@ class TreatmentRecordCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        AppHelpers.formatTimeOfDayTo12Hour(
-                          record.bookedSlot.startingTime,
-                        ),
+                        '${treatment.slotStart} - ${treatment.slotEnd}',
                         style: const TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 14,
@@ -87,14 +84,16 @@ class TreatmentRecordCard extends StatelessWidget {
                         ),
                         decoration: BoxDecoration(
                           color: getBookingOptionColor(
-                            record.bookingOption,
+                            treatment.appointmentType,
                           ).withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
-                          getBookingOptionText(record.bookingOption),
+                          getBookingOptionText(treatment.appointmentType),
                           style: TextStyle(
-                            color: getBookingOptionColor(record.bookingOption),
+                            color: getBookingOptionColor(
+                              treatment.appointmentType,
+                            ),
                             fontSize: 10,
                             fontWeight: FontWeight.w500,
                           ),
@@ -114,7 +113,7 @@ class TreatmentRecordCard extends StatelessWidget {
                   const SizedBox(width: 4),
                   Expanded(
                     child: Text(
-                      '${record.category} • ${record.subCategory}',
+                      '${treatment.category} • ${treatment.subCategory}',
                       style: TextStyle(fontSize: 12, color: Colors.grey[700]),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -125,30 +124,36 @@ class TreatmentRecordCard extends StatelessWidget {
 
               const SizedBox(height: 4),
 
-              Row(
-                children: [
-                  Icon(
-                    Icons.medical_services,
-                    size: 14,
-                    color: Colors.grey[600],
-                  ),
-                  const SizedBox(width: 4),
-                  Expanded(
-                    child: Text(
-                      record.reason,
-                      style: const TextStyle(fontSize: 12),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
-              ),
+              if (treatment.reason != null)
+                SizedBox(
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.medical_services,
+                            size: 14,
+                            color: Colors.grey[600],
+                          ),
+                          const SizedBox(width: 4),
+                          Expanded(
+                            child: Text(
+                              treatment.reason!.name,
+                              style: const TextStyle(fontSize: 12),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
 
-              const SizedBox(height: 4),
+                      const SizedBox(height: 4),
+                    ],
+                  ),
+                ),
 
               // Quick status indicator if there are additional notes
-              if (record.additionalNotes != null &&
-                  record.additionalNotes!.isNotEmpty)
+              if (treatment.notes != null && treatment.notes!.isNotEmpty)
                 Row(
                   children: [
                     Icon(Icons.note, size: 14, color: Colors.orange[600]),

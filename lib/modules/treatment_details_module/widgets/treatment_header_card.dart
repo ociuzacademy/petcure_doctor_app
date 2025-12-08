@@ -1,13 +1,19 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:flutter/material.dart';
-import 'package:petcure_doctor_app/core/models/treatment_record.dart';
 import 'package:petcure_doctor_app/core/theme/app_palette.dart';
 
 class TreatmentHeaderCard extends StatelessWidget {
-  const TreatmentHeaderCard({super.key, required this.treatmentRecord});
+  const TreatmentHeaderCard({
+    super.key,
+    required this.petId,
+    required this.petName,
+    required this.ownerName,
+  });
 
-  final TreatmentRecord treatmentRecord;
+  final int petId;
+  final String petName;
+  final String ownerName;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +26,11 @@ class TreatmentHeaderCard extends StatelessWidget {
             CircleAvatar(
               backgroundColor: AppPalette.firstColor.withValues(alpha: 0.2),
               radius: 30,
-              child: const Icon(Icons.pets, size: 30, color: AppPalette.firstColor),
+              child: const Icon(
+                Icons.pets,
+                size: 30,
+                color: AppPalette.firstColor,
+              ),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -28,7 +38,7 @@ class TreatmentHeaderCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    treatmentRecord.petName,
+                    petName,
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -36,12 +46,12 @@ class TreatmentHeaderCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'Owner: ${treatmentRecord.ownerName}',
+                    'Owner: $ownerName',
                     style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    'Pet ID: ${treatmentRecord.petId}',
+                    'Pet ID: $petId',
                     style: TextStyle(fontSize: 12, color: Colors.grey[500]),
                   ),
                 ],
