@@ -55,15 +55,14 @@ class _TreatmentDetailsPageState extends State<TreatmentDetailsPage> {
         ).textTheme.titleLarge?.copyWith(color: AppPalette.whiteColor),
         iconTheme: const IconThemeData(color: AppPalette.whiteColor),
       ),
-      body: BlocBuilder<TreatmentDetailsCubit, TreatmentDetailsState>(
-        builder: (context, state) {
-          switch (state) {
-            case TreatmentDetailsLoading():
-              return const CustomLoadingWidget(
+      body: SafeArea(
+        child: BlocBuilder<TreatmentDetailsCubit, TreatmentDetailsState>(
+          builder: (context, state) {
+            return switch (state) {
+              TreatmentDetailsLoading() => const CustomLoadingWidget(
                 message: 'Loading treatment details...',
-              );
-            case TreatmentDetailsSuccess(:final data):
-              return SingleChildScrollView(
+              ),
+              TreatmentDetailsSuccess(:final data) => SingleChildScrollView(
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -188,16 +187,15 @@ class _TreatmentDetailsPageState extends State<TreatmentDetailsPage> {
                       ),
                   ],
                 ),
-              );
-            case TreatmentDetailsError(:final message):
-              return CustomErrorWidget(
+              ),
+              TreatmentDetailsError(:final message) => CustomErrorWidget(
                 onRetry: _treatmentDetailsHelper.treatmentDetailsInit,
                 errorMessage: message,
-              );
-            default:
-              return const SizedBox.shrink();
-          }
-        },
+              ),
+              _ => const SizedBox.shrink(),
+            };
+          },
+        ),
       ),
     );
   }

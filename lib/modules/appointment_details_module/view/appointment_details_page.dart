@@ -49,95 +49,104 @@ class _AppointmentDetailsPageState extends State<AppointmentDetailsPage> {
           AppointmentDetailsProvider(bookingId: widget.bookingId),
       child: Scaffold(
         appBar: AppBar(title: const Text('Appointment Details')),
-        body: BlocListener<CompleteAppointmentBloc, CompleteAppointmentState>(
-          listener: (context, state) {
-            switch (state) {
-              case CompleteAppointmentLoading _:
-                OverlayLoader.show(
-                  context,
-                  message: 'Completing appointment...',
-                );
-                break;
-              case CompleteAppointmentSuccess(:final response):
-                OverlayLoader.hide();
-                CustomSnackBar.showSuccess(context, message: response.message);
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  HomePage.route(),
-                  (route) => false,
-                );
-                break;
-              case CompleteAppointmentError(:final error):
-                OverlayLoader.hide();
-                CustomSnackBar.showError(context, message: error);
-                break;
-              default:
-                OverlayLoader.hide();
-                break;
-            }
-          },
-          child: BlocBuilder<AppointmentDetailsCubit, AppointmentDetailsState>(
-            builder: (context, state) {
+        body: SafeArea(
+          child: BlocListener<CompleteAppointmentBloc, CompleteAppointmentState>(
+            listener: (context, state) {
               switch (state) {
-                case AppointmentDetailsLoading _:
-                  return const CustomLoadingWidget(
-                    message: 'Loading appointment details...',
+                case CompleteAppointmentLoading _:
+                  OverlayLoader.show(
+                    context,
+                    message: 'Completing appointment...',
                   );
-                case AppointmentDetailsError(:final message):
-                  return CustomErrorWidget(
-                    onRetry:
-                        _appointmentDetailsHelper.bookingDetailsInitializer,
-                    errorMessage: message,
+                  break;
+                case CompleteAppointmentSuccess(:final response):
+                  OverlayLoader.hide();
+                  CustomSnackBar.showSuccess(
+                    context,
+                    message: response.message,
                   );
-                case AppointmentDetailsSuccess(:final appointmentDetails):
-                  return Consumer<AppointmentDetailsProvider>(
-                    builder: (context, provider, child) {
-                      return Form(
-                        key: provider.formKey,
-                        child: SingleChildScrollView(
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            children: [
-                              // Pet Information
-                              PetInfoSection(
-                                pet: appointmentDetails.data.petDetails,
-                              ),
-                              const SizedBox(height: 16),
-
-                              // Booking Information
-                              BookingInfoSection(booking: appointmentDetails),
-                              const SizedBox(height: 16),
-
-                              ClinicalAppointmentForm(
-                                weightController: provider.weightController,
-                                verdictController: provider.verdictController,
-                                notesController: provider.notesController,
-                              ),
-
-                              const SizedBox(height: 24),
-
-                              // Submit Button
-                              CustomButton(
-                                buttonWidth: double.infinity,
-                                backgroundColor: AppPalette.firstColor,
-                                textColor: AppPalette.whiteColor,
-                                labelText: 'Save Examination Details',
-                                onClick: () => _appointmentDetailsHelper
-                                    .completeAppointment(
-                                      provider.getCompleteAppointmentData(),
-                                    ),
-                              ),
-                              const SizedBox(height: 16),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    HomePage.route(),
+                    (route) => false,
                   );
+                  break;
+                case CompleteAppointmentError(:final error):
+                  OverlayLoader.hide();
+                  CustomSnackBar.showError(context, message: error);
+                  break;
                 default:
-                  return const SizedBox.shrink();
+                  OverlayLoader.hide();
+                  break;
               }
             },
+            child:
+                BlocBuilder<AppointmentDetailsCubit, AppointmentDetailsState>(
+                  builder: (context, state) {
+                    return switch (state) {
+                      AppointmentDetailsLoading _ => const CustomLoadingWidget(
+                        message: 'Loading appointment details...',
+                      ),
+                      AppointmentDetailsError(:final message) =>
+                        CustomErrorWidget(
+                          onRetry: _appointmentDetailsHelper
+                              .bookingDetailsInitializer,
+                          errorMessage: message,
+                        ),
+                      AppointmentDetailsSuccess(:final appointmentDetails) =>
+                        Consumer<AppointmentDetailsProvider>(
+                          builder: (context, provider, child) {
+                            return Form(
+                              key: provider.formKey,
+                              child: SingleChildScrollView(
+                                padding: const EdgeInsets.all(16),
+                                child: Column(
+                                  children: [
+                                    // Pet Information
+                                    PetInfoSection(
+                                      pet: appointmentDetails.data.petDetails,
+                                    ),
+                                    const SizedBox(height: 16),
+
+                                    // Booking Information
+                                    BookingInfoSection(
+                                      booking: appointmentDetails,
+                                    ),
+                                    const SizedBox(height: 16),
+
+                                    ClinicalAppointmentForm(
+                                      weightController:
+                                          provider.weightController,
+                                      verdictController:
+                                          provider.verdictController,
+                                      notesController: provider.notesController,
+                                    ),
+
+                                    const SizedBox(height: 24),
+
+                                    // Submit Button
+                                    CustomButton(
+                                      buttonWidth: double.infinity,
+                                      backgroundColor: AppPalette.firstColor,
+                                      textColor: AppPalette.whiteColor,
+                                      labelText: 'Save Examination Details',
+                                      onClick: () => _appointmentDetailsHelper
+                                          .completeAppointment(
+                                            provider
+                                                .getCompleteAppointmentData(),
+                                          ),
+                                    ),
+                                    const SizedBox(height: 16),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      _ => const SizedBox.shrink(),
+                    };
+                  },
+                ),
           ),
         ),
       ),

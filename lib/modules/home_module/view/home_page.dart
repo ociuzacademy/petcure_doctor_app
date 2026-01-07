@@ -89,14 +89,16 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      body: PageView(
-        controller: _pageController,
-        onPageChanged: (index) {
-          setState(() {
-            _currentPageIndex = index;
-          });
-        },
-        children: _appBodies,
+      body: SafeArea(
+        child: PageView(
+          controller: _pageController,
+          onPageChanged: (index) {
+            setState(() {
+              _currentPageIndex = index;
+            });
+          },
+          children: _appBodies,
+        ),
       ),
       drawer: Drawer(
         backgroundColor: AppPalette.thirdColor,

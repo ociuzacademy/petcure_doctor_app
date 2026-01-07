@@ -70,18 +70,16 @@ class _TreatmentListPageState extends State<TreatmentListPage> {
           ),
         ],
       ),
-      body: BlocBuilder<TreatmentHistoryCubit, TreatmentHistoryState>(
-        builder: (context, state) {
-          switch (state) {
-            case TreatmentHistoryLoading _:
-              return const CustomLoadingWidget();
-            case TreatmentHistoryError(:final message):
-              return CustomErrorWidget(
+      body: SafeArea(
+        child: BlocBuilder<TreatmentHistoryCubit, TreatmentHistoryState>(
+          builder: (context, state) {
+            return switch (state) {
+              TreatmentHistoryLoading() => const CustomLoadingWidget(),
+              TreatmentHistoryError(:final message) => CustomErrorWidget(
                 onRetry: _treatmentListHelper.getTreatmentHistory,
                 errorMessage: message,
-              );
-            case TreatmentHistorySuccess(:final treatmentHistory):
-              return Column(
+              ),
+              TreatmentHistorySuccess(:final treatmentHistory) => Column(
                 children: [
                   // Date selector
                   DateSelectorWidget(
@@ -114,11 +112,11 @@ class _TreatmentListPageState extends State<TreatmentListPage> {
                           ),
                   ),
                 ],
-              );
-            default:
-              return const SizedBox.shrink();
-          }
-        },
+              ),
+              _ => const SizedBox.shrink(),
+            };
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

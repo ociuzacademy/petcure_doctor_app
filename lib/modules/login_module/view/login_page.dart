@@ -56,6 +56,7 @@ class _LoginPageState extends State<LoginPage> {
     final screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
+      backgroundColor: Colors.grey[50], // Light background for the whole page
       body: BlocListener<LoginBloc, LoginState>(
         listener: (context, state) {
           switch (state) {
@@ -80,94 +81,200 @@ class _LoginPageState extends State<LoginPage> {
               break;
           }
         },
-        child: Form(
-          key: _formKey,
-          child: Center(
-            child: Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: screenSize.width * 0.05,
-                vertical: screenSize.height * 0.05,
-              ),
-              constraints: BoxConstraints(maxWidth: screenSize.width * 0.85),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CustomTextField(
-                      textEditingController: _emailController,
-                      validatorFunction: (value) {
-                        // add email validation
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your email';
-                        }
-
-                        bool emailValid = RegExp(
-                          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
-                        ).hasMatch(value);
-                        if (!emailValid) {
-                          return 'Please enter a valid email';
-                        }
-
-                        return null;
-                      },
-                      labelText: 'Email',
-                      hintText: 'Enter your email',
-                      textFieldIcon: const Icon(Icons.email_outlined),
-                      textInputType: TextInputType.emailAddress,
-                      focusNode: _emailFocusNode,
-                      nextFocusNode: _passwordFocusNode,
-                    ),
-                    SizedBox(height: screenSize.height * 0.025),
-                    CustomTextField(
-                      textEditingController: _passwordController,
-                      validatorFunction: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter password';
-                        }
-
-                        if (value.length < 3) {
-                          return 'Password must be at least 3 characters';
-                        }
-                        return null;
-                      },
-                      labelText: 'Password',
-                      hintText: 'Enter your password',
-                      textFieldIcon: const Icon(Icons.password),
-                      textInputType: TextInputType.visiblePassword,
-                      isPassword: true,
-                      focusNode: _passwordFocusNode,
-                    ),
-                    SizedBox(height: screenSize.height * 0.025),
-                    CustomButton(
-                      buttonWidth: double.infinity,
-                      backgroundColor: AppPalette.firstColor,
-                      textColor: AppPalette.whiteColor,
-                      labelText: 'Login',
-                      onClick: _loginHelper.login,
-                    ),
-                  ],
+        child: Stack(
+          children: [
+            // Gradient Header
+            Container(
+              height: screenSize.height * 0.35,
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [AppPalette.firstColor, AppPalette.secondColor],
+                ),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(40),
+                  bottomRight: Radius.circular(40),
                 ),
               ),
             ),
-          ),
+            // Form Content
+            SafeArea(
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: screenSize.width * 0.06,
+                  ),
+                  child: Column(
+                    children: [
+                      SizedBox(height: screenSize.height * 0.05),
+                      // Logo Section
+                      Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: AppPalette.whiteColor.withValues(alpha: 0.2),
+                        ),
+                        child: const CircleAvatar(
+                          radius: 60,
+                          backgroundColor: AppPalette.whiteColor,
+                          child: Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Image(
+                              image: AssetImage('assets/images/logo.png'),
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: screenSize.height * 0.05),
+                      // Login Card
+                      Form(
+                        key: _formKey,
+                        child: Container(
+                          padding: const EdgeInsets.all(24),
+                          decoration: BoxDecoration(
+                            color: AppPalette.whiteColor,
+                            borderRadius: BorderRadius.circular(24),
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppPalette.blackColor.withValues(
+                                  alpha: 0.1,
+                                ),
+                                blurRadius: 20,
+                                offset: const Offset(0, 10),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Welcome Back',
+                                style: TextStyle(
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppPalette.blackColor,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                'Log in to your account to continue',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.grey[600],
+                                ),
+                              ),
+                              const SizedBox(height: 32),
+                              CustomTextField(
+                                textEditingController: _emailController,
+                                validatorFunction: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter your email';
+                                  }
+                                  bool emailValid = RegExp(
+                                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+                                  ).hasMatch(value);
+                                  if (!emailValid) {
+                                    return 'Please enter a valid email';
+                                  }
+                                  return null;
+                                },
+                                labelText: 'Email Address',
+                                hintText: 'example@email.com',
+                                textFieldIcon: const Icon(Icons.email_outlined),
+                                textInputType: TextInputType.emailAddress,
+                                focusNode: _emailFocusNode,
+                                nextFocusNode: _passwordFocusNode,
+                              ),
+                              const SizedBox(height: 20),
+                              CustomTextField(
+                                textEditingController: _passwordController,
+                                validatorFunction: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter password';
+                                  }
+                                  if (value.length < 3) {
+                                    return 'Password must be at least 3 characters';
+                                  }
+                                  return null;
+                                },
+                                labelText: 'Password',
+                                hintText: 'Enter your password',
+                                textFieldIcon: const Icon(
+                                  Icons.lock_outline_rounded,
+                                ),
+                                textInputType: TextInputType.visiblePassword,
+                                isPassword: true,
+                                focusNode: _passwordFocusNode,
+                              ),
+                              const SizedBox(height: 12),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: TextButton(
+                                  onPressed: () {
+                                    // Forgot Password logic could go here
+                                  },
+                                  child: const Text(
+                                    'Forgot Password?',
+                                    style: TextStyle(
+                                      color: AppPalette.firstColor,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 24),
+                              CustomButton(
+                                buttonWidth: double.infinity,
+                                backgroundColor: AppPalette.firstColor,
+                                textColor: AppPalette.whiteColor,
+                                labelText: 'LOGIN',
+                                onClick: _loginHelper.login,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: screenSize.height * 0.05),
+                      // Register Link
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Don't have an account? ",
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                              fontSize: 15,
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () => Navigator.pushReplacement(
+                              context,
+                              RegistrationPage.route(),
+                            ),
+                            child: const Text(
+                              'Register Sekarang',
+                              style: TextStyle(
+                                color: AppPalette.firstColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: screenSize.height * 0.05),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
-      persistentFooterButtons: [
-        InkWell(
-          onTap: () =>
-              Navigator.pushReplacement(context, RegistrationPage.route()),
-          child: const Text(
-            'Create Account',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: AppPalette.firstColor,
-            ),
-          ),
-        ),
-      ],
-      persistentFooterAlignment: AlignmentDirectional.center,
     );
   }
 }

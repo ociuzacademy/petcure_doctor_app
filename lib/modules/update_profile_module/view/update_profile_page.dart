@@ -51,71 +51,69 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
           ).textTheme.titleLarge?.copyWith(color: AppPalette.whiteColor),
           iconTheme: const IconThemeData(color: AppPalette.whiteColor),
         ),
-        body: Consumer<UpdateProfileProvider>(
-          builder: (context, provider, child) {
-            return MultiBlocListener(
-              listeners: [
-                BlocListener<DoctorProfileCubit, DoctorProfileState>(
-                  listener: (context, state) {
-                    switch (state) {
-                      case DoctorProfileSuccess(:final profileData):
-                        provider.setDoctorProfileModel(profileData);
-                        break;
-                      default:
-                    }
-                  },
-                ),
-                BlocListener<UpdateProfileBloc, UpdateProfileState>(
-                  listener: (context, state) {
-                    switch (state) {
-                      case UpdateProfileLoading _:
-                        OverlayLoader.show(
-                          context,
-                          message: 'Updating profile...',
-                        );
-                        break;
-                      case UpdateProfileSuccess(:final response):
-                        OverlayLoader.hide();
-                        CustomSnackBar.showSuccess(
-                          context,
-                          message: response.detail,
-                        );
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          HomePage.route(),
-                          (_) => false,
-                        );
-                        break;
-                      case UpdateProfileError(:final errorMessage):
-                        OverlayLoader.hide();
-                        CustomSnackBar.showError(
-                          context,
-                          message: errorMessage,
-                        );
-                        break;
-                      default:
-                        OverlayLoader.hide;
-                        break;
-                    }
-                  },
-                ),
-              ],
-              child: BlocBuilder<DoctorProfileCubit, DoctorProfileState>(
-                builder: (context, state) {
-                  switch (state) {
-                    case DoctorProfileLoading _:
-                      return const CustomLoadingWidget(
+        body: SafeArea(
+          child: Consumer<UpdateProfileProvider>(
+            builder: (context, provider, child) {
+              return MultiBlocListener(
+                listeners: [
+                  BlocListener<DoctorProfileCubit, DoctorProfileState>(
+                    listener: (context, state) {
+                      switch (state) {
+                        case DoctorProfileSuccess(:final profileData):
+                          provider.setDoctorProfileModel(profileData);
+                          break;
+                        default:
+                      }
+                    },
+                  ),
+                  BlocListener<UpdateProfileBloc, UpdateProfileState>(
+                    listener: (context, state) {
+                      switch (state) {
+                        case UpdateProfileLoading _:
+                          OverlayLoader.show(
+                            context,
+                            message: 'Updating profile...',
+                          );
+                          break;
+                        case UpdateProfileSuccess(:final response):
+                          OverlayLoader.hide();
+                          CustomSnackBar.showSuccess(
+                            context,
+                            message: response.detail,
+                          );
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            HomePage.route(),
+                            (_) => false,
+                          );
+                          break;
+                        case UpdateProfileError(:final errorMessage):
+                          OverlayLoader.hide();
+                          CustomSnackBar.showError(
+                            context,
+                            message: errorMessage,
+                          );
+                          break;
+                        default:
+                          OverlayLoader.hide;
+                          break;
+                      }
+                    },
+                  ),
+                ],
+                child: BlocBuilder<DoctorProfileCubit, DoctorProfileState>(
+                  builder: (context, state) {
+                    return switch (state) {
+                      DoctorProfileLoading() => const CustomLoadingWidget(
                         message: 'Fetching profile data...',
-                      );
-                    case DoctorProfileError(:final errorMessage):
-                      return CustomErrorWidget(
-                        onRetry: _updateProfileHelper.doctorProfileInit,
-                        errorMessage: errorMessage,
-                      );
-                    case DoctorProfileInitial _:
-                      return const SizedBox.shrink();
-                    case DoctorProfileSuccess _:
-                      return Form(
+                      ),
+                      DoctorProfileError(:final errorMessage) =>
+                        CustomErrorWidget(
+                          onRetry: _updateProfileHelper.doctorProfileInit,
+                          errorMessage: errorMessage,
+                        ),
+                      DoctorProfileInitial() => const SizedBox.shrink(),
+                      DoctorProfileSuccess() => Form(
                         key: provider.formKey,
                         child: Center(
                           child: Padding(
@@ -457,12 +455,13 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                             ),
                           ),
                         ),
-                      );
-                  }
-                },
-              ),
-            );
-          },
+                      ),
+                    };
+                  },
+                ),
+              );
+            },
+          ),
         ),
       ),
     );
