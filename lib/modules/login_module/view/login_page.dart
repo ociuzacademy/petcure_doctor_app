@@ -9,6 +9,7 @@ import 'package:petcure_doctor_app/widgets/buttons/custom_button.dart';
 import 'package:petcure_doctor_app/widgets/loaders/overlay_loader.dart';
 import 'package:petcure_doctor_app/widgets/snackbars/custom_snack_bar.dart';
 import 'package:petcure_doctor_app/widgets/text_fields/custom_text_field.dart';
+import 'package:petcure_doctor_app/core/helpers/validators.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -170,18 +171,7 @@ class _LoginPageState extends State<LoginPage> {
                               const SizedBox(height: 32),
                               CustomTextField(
                                 textEditingController: _emailController,
-                                validatorFunction: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter your email';
-                                  }
-                                  bool emailValid = RegExp(
-                                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
-                                  ).hasMatch(value);
-                                  if (!emailValid) {
-                                    return 'Please enter a valid email';
-                                  }
-                                  return null;
-                                },
+                                validatorFunction: Validators.email,
                                 labelText: 'Email Address',
                                 hintText: 'example@email.com',
                                 textFieldIcon: const Icon(Icons.email_outlined),
@@ -192,15 +182,7 @@ class _LoginPageState extends State<LoginPage> {
                               const SizedBox(height: 20),
                               CustomTextField(
                                 textEditingController: _passwordController,
-                                validatorFunction: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter password';
-                                  }
-                                  if (value.length < 3) {
-                                    return 'Password must be at least 3 characters';
-                                  }
-                                  return null;
-                                },
+                                validatorFunction: Validators.password,
                                 labelText: 'Password',
                                 hintText: 'Enter your password',
                                 textFieldIcon: const Icon(

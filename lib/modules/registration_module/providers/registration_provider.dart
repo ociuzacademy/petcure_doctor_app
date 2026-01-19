@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:petcure_doctor_app/core/helpers/validators.dart';
 import 'package:petcure_doctor_app/modules/registration_module/classes/doctor_registration_data.dart';
 
 class RegistrationProvider with ChangeNotifier {
@@ -120,63 +121,27 @@ class RegistrationProvider with ChangeNotifier {
 
   // Validation methods
   String? validateFullName(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter full name';
-    }
-    return null;
+    return Validators.name(value, 'full name');
   }
 
   String? validateEmail(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter email';
-    }
-
-    bool emailValid = RegExp(
-      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
-    ).hasMatch(value);
-    if (!emailValid) {
-      return 'Please enter a valid email';
-    }
-
-    return null;
+    return Validators.email(value);
   }
 
   String? validatePhoneNumber(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter phone number';
-    }
-
-    bool phoneValid = RegExp(r'^(\+91[\-\s]?)?[6-9]\d{9}$').hasMatch(value);
-    if (!phoneValid) {
-      return 'Please enter a valid phone number';
-    }
-
-    return null;
+    return Validators.phone(value);
   }
 
   String? validateAddress(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please add your address';
-    }
-    return null;
+    return Validators.required(value, 'your address');
   }
 
   String? validatePassword(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter password';
-    }
-
-    if (value.length < 6) {
-      return 'Password must be at least 6 characters';
-    }
-    return null;
+    return Validators.password(value);
   }
 
   String? validateLocation(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please get your location';
-    }
-    return null;
+    return Validators.required(value, 'your location');
   }
 
   // Check if form is valid
