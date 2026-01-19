@@ -124,7 +124,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: Padding(
                             padding: EdgeInsets.all(10),
                             child: Image(
-                              image: AssetImage('assets/images/logo.png'),
+                              image: AssetImage('assets/icons/icon.png'),
                               fit: BoxFit.contain,
                             ),
                           ),
@@ -191,22 +191,6 @@ class _LoginPageState extends State<LoginPage> {
                                 textInputType: TextInputType.visiblePassword,
                                 isPassword: true,
                                 focusNode: _passwordFocusNode,
-                              ),
-                              const SizedBox(height: 12),
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: TextButton(
-                                  onPressed: () {
-                                    // Forgot Password logic could go here
-                                  },
-                                  child: const Text(
-                                    'Forgot Password?',
-                                    style: TextStyle(
-                                      color: AppPalette.firstColor,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
                               ),
                               const SizedBox(height: 24),
                               CustomButton(
