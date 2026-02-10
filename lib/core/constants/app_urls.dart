@@ -17,4 +17,7 @@ class AppUrls {
 
   static const String treatmentsHistoryUrl = '$doctorUrl/treatments_history/';
   static const String treatmentDetailsUrl = '$doctorUrl/treatment_details/';
+
+  static const String doctorComplaintsUrl = '$doctorUrl/doctor_complaints/';
+  static const String doctorFeedbacksUrl = '$doctorUrl/doctor_feedbacks/';
 }

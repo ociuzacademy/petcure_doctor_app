@@ -7,3 +7,5 @@ export 'package:petcure_doctor_app/modules/appointment_details_module/cubit/appo
 export 'package:petcure_doctor_app/modules/appointment_details_module/bloc/complete_appointment_bloc.dart';
 export 'package:petcure_doctor_app/modules/treatment_list_module/cubit/treatment_history_cubit.dart';
 export 'package:petcure_doctor_app/modules/treatment_details_module/cubit/treatment_details_cubit.dart';
+export 'package:petcure_doctor_app/modules/feedback_and_complaints_module/cubit/doctor_feedbacks/doctor_feedbacks_cubit.dart';
+export 'package:petcure_doctor_app/modules/feedback_and_complaints_module/cubit/doctor_complaints/doctor_complaints_cubit.dart';

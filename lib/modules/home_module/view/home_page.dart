@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:petcure_doctor_app/core/theme/app_palette.dart';
+import 'package:petcure_doctor_app/modules/feedback_and_complaints_module/view/feedback_and_complaints_page.dart';
 import 'package:petcure_doctor_app/modules/home_module/widgets/bookings_list_widget.dart';
 import 'package:petcure_doctor_app/modules/home_module/widgets/profile_widget.dart';
 import 'package:petcure_doctor_app/modules/login_module/view/login_page.dart';
@@ -128,6 +129,20 @@ class _HomePageState extends State<HomePage> {
               ),
               onTap: () {
                 Navigator.push(context, TreatmentListPage.route());
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.feedback, color: AppPalette.firstColor),
+              title: const Text(
+                'Feedbacks & Complaints',
+                style: TextStyle(
+                  color: AppPalette.firstColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+              onTap: () {
+                Navigator.push(context, FeedbackAndComplaintsPage.route());
               },
             ),
             ListTile(
