@@ -4,6 +4,7 @@ import 'package:petcure_doctor_app/modules/feedback_and_complaints_module/view/f
 import 'package:petcure_doctor_app/modules/home_module/widgets/bookings_list_widget.dart';
 import 'package:petcure_doctor_app/modules/home_module/widgets/profile_widget.dart';
 import 'package:petcure_doctor_app/modules/login_module/view/login_page.dart';
+import 'package:petcure_doctor_app/modules/time_slot_management_module/view/time_slot_management_page.dart';
 import 'package:petcure_doctor_app/modules/treatment_list_module/view/treatment_list_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -143,6 +144,23 @@ class _HomePageState extends State<HomePage> {
               ),
               onTap: () {
                 Navigator.push(context, FeedbackAndComplaintsPage.route());
+              },
+            ),
+            ListTile(
+              leading: const Icon(
+                Icons.do_not_disturb_alt,
+                color: AppPalette.firstColor,
+              ),
+              title: const Text(
+                'Time Slot Management',
+                style: TextStyle(
+                  color: AppPalette.firstColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+              onTap: () {
+                Navigator.push(context, TimeSlotManagementPage.route());
               },
             ),
             ListTile(

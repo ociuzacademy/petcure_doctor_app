@@ -9,3 +9,5 @@ export 'package:petcure_doctor_app/modules/treatment_list_module/cubit/treatment
 export 'package:petcure_doctor_app/modules/treatment_details_module/cubit/treatment_details_cubit.dart';
 export 'package:petcure_doctor_app/modules/feedback_and_complaints_module/cubit/doctor_feedbacks/doctor_feedbacks_cubit.dart';
 export 'package:petcure_doctor_app/modules/feedback_and_complaints_module/cubit/doctor_complaints/doctor_complaints_cubit.dart';
+export 'package:petcure_doctor_app/modules/time_slot_management_module/cubit/available_time_slots_cubit.dart';
+export 'package:petcure_doctor_app/modules/time_slot_management_module/bloc/confirm_leave_bloc.dart';

@@ -20,4 +20,7 @@ class AppUrls {
 
   static const String doctorComplaintsUrl = '$doctorUrl/doctor_complaints/';
   static const String doctorFeedbacksUrl = '$doctorUrl/doctor_feedbacks/';
+
+  static const String availableSlotsUrl = '$doctorUrl/available-slots/';
+  static const String manageSlotsUrl = '$doctorUrl/manage-slots/';
 }
