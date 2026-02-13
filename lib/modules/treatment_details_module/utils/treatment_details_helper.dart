@@ -16,6 +16,11 @@ class TreatmentDetailsHelper {
     cubit.getTreatmentDetails(bookingId: bookingId);
   }
 
+  void prescriptionInit() {
+    final PrescriptionCubit cubit = context.read<PrescriptionCubit>();
+    cubit.getPrescription(appointmentId: bookingId);
+  }
+
   static String calculateAge(DateTime birthDate) {
     final now = DateTime.now();
     int years = now.year - birthDate.year;

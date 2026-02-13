@@ -49,19 +49,19 @@ class TreatmentDetails {
   final String slot;
   final BookingReason? reason;
   final String? symptoms;
-  final String diagnosis;
+  final String? diagnosis;
   final String? notes;
   final PetDetails petDetails;
   final DoctorDetails doctorDetails;
 
-  TreatmentDetails({
+  const TreatmentDetails({
     required this.bookingId,
     required this.appointmentType,
     required this.date,
     required this.slot,
     this.reason,
     this.symptoms,
-    required this.diagnosis,
+    this.diagnosis,
     this.notes,
     required this.petDetails,
     required this.doctorDetails,
@@ -135,7 +135,7 @@ class DoctorDetails {
   final String image;
   final String idCard;
 
-  DoctorDetails({
+  const DoctorDetails({
     required this.id,
     required this.fullName,
     required this.email,
@@ -211,12 +211,12 @@ class PetDetails {
   final DateTime birthDate;
   final String gender;
   final double weight;
-  final String healthCondition;
+  final String? healthCondition;
   final String category;
   final String subCategory;
   final String image;
 
-  PetDetails({
+  const PetDetails({
     required this.id,
     required this.name,
     required this.ownerName,

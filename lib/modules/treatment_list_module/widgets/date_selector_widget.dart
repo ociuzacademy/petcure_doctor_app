@@ -35,7 +35,7 @@ class DateSelectorWidget extends StatelessWidget {
               value: selectedDate,
               onValueChange: onSelectingDate,
               firstDate: DateTime.now().subtract(const Duration(days: 365)),
-              lastDate: DateTime.now().add(const Duration(days: 30)),
+              lastDate: DateTime.now(),
             ),
             const SizedBox(height: 8),
             if (selectedDate != null) ...[

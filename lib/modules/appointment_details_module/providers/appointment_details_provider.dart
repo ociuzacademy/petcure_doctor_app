@@ -12,6 +12,10 @@ class AppointmentDetailsProvider with ChangeNotifier {
   final TextEditingController weightController = TextEditingController();
   final TextEditingController verdictController = TextEditingController();
   final TextEditingController notesController = TextEditingController();
+  final TextEditingController daysDurationController = TextEditingController();
+
+  // Medication controllers
+  final List<MedicationFormController> medicationControllers = [];
 
   // Form key
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -58,6 +62,20 @@ class AppointmentDetailsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  // Medication management
+  void addMedication() {
+    medicationControllers.add(MedicationFormController());
+    notifyListeners();
+  }
+
+  void removeMedication(int index) {
+    if (index >= 0 && index < medicationControllers.length) {
+      medicationControllers[index].dispose();
+      medicationControllers.removeAt(index);
+      notifyListeners();
+    }
+  }
+
   // Validation methods
   String? validateWeight(String? value) {
     if (value == null || value.isEmpty) {
@@ -84,6 +102,17 @@ class AppointmentDetailsProvider with ChangeNotifier {
     return null; // Notes are optional
   }
 
+  String? validateDaysDuration(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter duration';
+    }
+    final days = int.tryParse(value);
+    if (days == null || days <= 0) {
+      return 'Invalid duration';
+    }
+    return null;
+  }
+
   // Check if form is valid
   bool validateForm() {
     return formKey.currentState?.validate() ?? false;
@@ -94,11 +123,22 @@ class AppointmentDetailsProvider with ChangeNotifier {
       return null;
     }
 
+    final medications = medicationControllers.map((controller) {
+      return Medication(
+        name: controller.nameController.text.trim(),
+        dosage: controller.dosageController.text.trim(),
+        foodTiming: controller.foodTiming ?? '',
+        timeOfDay: controller.timeOfDay,
+      );
+    }).toList();
+
     return CompleteAppointmentData(
       bookingId: bookingId,
       weight: double.parse(weightController.text.trim()),
       diagnosisAndVerdict: verdictController.text.trim(),
-      notes: notesController.text.trim().isNotEmpty
+      daysDuration: int.parse(daysDurationController.text.trim()),
+      medications: medications,
+      prescriptionNotes: notesController.text.trim().isNotEmpty
           ? notesController.text.trim()
           : null,
     );
@@ -109,6 +149,11 @@ class AppointmentDetailsProvider with ChangeNotifier {
     weightController.clear();
     verdictController.clear();
     notesController.clear();
+    daysDurationController.clear();
+    for (var controller in medicationControllers) {
+      controller.dispose();
+    }
+    medicationControllers.clear();
     _selectedDate = null;
     _selectedTimeSlot = null;
     _isSubmitting = false;
@@ -120,6 +165,22 @@ class AppointmentDetailsProvider with ChangeNotifier {
     weightController.dispose();
     verdictController.dispose();
     notesController.dispose();
+    daysDurationController.dispose();
+    for (var controller in medicationControllers) {
+      controller.dispose();
+    }
     super.dispose();
+  }
+}
+
+class MedicationFormController {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController dosageController = TextEditingController();
+  String? foodTiming;
+  List<String> timeOfDay = [];
+
+  void dispose() {
+    nameController.dispose();
+    dosageController.dispose();
   }
 }

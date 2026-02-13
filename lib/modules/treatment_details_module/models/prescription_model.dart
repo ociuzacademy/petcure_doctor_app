@@ -1,50 +1,57 @@
 // To parse this JSON data, do
 //
-//     final completeAppointmentResponseModel = completeAppointmentResponseModelFromJson(jsonString);
+//     final prescriptionModel = prescriptionModelFromJson(jsonString);
 
 import 'dart:convert';
 
-CompleteAppointmentResponseModel completeAppointmentResponseModelFromJson(
-  String str,
-) => CompleteAppointmentResponseModel.fromJson(json.decode(str));
+import 'package:petcure_doctor_app/core/enums/appointment_type.dart';
 
-String completeAppointmentResponseModelToJson(
-  CompleteAppointmentResponseModel data,
-) => json.encode(data.toJson());
+PrescriptionModel prescriptionModelFromJson(String str) =>
+    PrescriptionModel.fromJson(json.decode(str));
 
-class CompleteAppointmentResponseModel {
-  final bool success;
-  final String message;
-  final Prescription prescription;
+String prescriptionModelToJson(PrescriptionModel data) =>
+    json.encode(data.toJson());
 
-  const CompleteAppointmentResponseModel({
-    required this.success,
-    required this.message,
-    required this.prescription,
+class PrescriptionModel {
+  final String status;
+  final String doctorId;
+  final int count;
+  final List<Prescription> prescriptions;
+
+  const PrescriptionModel({
+    required this.status,
+    required this.doctorId,
+    required this.count,
+    required this.prescriptions,
   });
 
-  CompleteAppointmentResponseModel copyWith({
-    bool? success,
-    String? message,
-    Prescription? prescription,
-  }) => CompleteAppointmentResponseModel(
-    success: success ?? this.success,
-    message: message ?? this.message,
-    prescription: prescription ?? this.prescription,
+  PrescriptionModel copyWith({
+    String? status,
+    String? doctorId,
+    int? count,
+    List<Prescription>? prescriptions,
+  }) => PrescriptionModel(
+    status: status ?? this.status,
+    doctorId: doctorId ?? this.doctorId,
+    count: count ?? this.count,
+    prescriptions: prescriptions ?? this.prescriptions,
   );
 
-  factory CompleteAppointmentResponseModel.fromJson(
-    Map<String, dynamic> json,
-  ) => CompleteAppointmentResponseModel(
-    success: json['success'],
-    message: json['message'],
-    prescription: Prescription.fromJson(json['prescription']),
-  );
+  factory PrescriptionModel.fromJson(Map<String, dynamic> json) =>
+      PrescriptionModel(
+        status: json['status'],
+        doctorId: json['doctor_id'],
+        count: json['count'],
+        prescriptions: List<Prescription>.from(
+          json['prescriptions'].map((x) => Prescription.fromJson(x)),
+        ),
+      );
 
   Map<String, dynamic> toJson() => {
-    'success': success,
-    'message': message,
-    'prescription': prescription.toJson(),
+    'status': status,
+    'doctor_id': doctorId,
+    'count': count,
+    'prescriptions': List<dynamic>.from(prescriptions.map((x) => x.toJson())),
   };
 }
 
@@ -62,7 +69,7 @@ class Prescription {
   final bool isActive;
   final String notes;
   final DateTime appointmentDate;
-  final String appointmentType;
+  final AppointmentType appointmentType;
 
   const Prescription({
     required this.id,
@@ -95,7 +102,7 @@ class Prescription {
     bool? isActive,
     String? notes,
     DateTime? appointmentDate,
-    String? appointmentType,
+    AppointmentType? appointmentType,
   }) => Prescription(
     id: id ?? this.id,
     appointment: appointment ?? this.appointment,
@@ -129,7 +136,7 @@ class Prescription {
     isActive: json['is_active'],
     notes: json['notes'],
     appointmentDate: DateTime.parse(json['appointment_date']),
-    appointmentType: json['appointment_type'],
+    appointmentType: AppointmentType.fromString(json['appointment_type']),
   );
 
   Map<String, dynamic> toJson() => {
@@ -147,7 +154,7 @@ class Prescription {
     'notes': notes,
     'appointment_date':
         "${appointmentDate.year.toString().padLeft(4, '0')}-${appointmentDate.month.toString().padLeft(2, '0')}-${appointmentDate.day.toString().padLeft(2, '0')}",
-    'appointment_type': appointmentType,
+    'appointment_type': appointmentType.toJson(),
   };
 }
 

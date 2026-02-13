@@ -23,4 +23,6 @@ class AppUrls {
 
   static const String availableSlotsUrl = '$doctorUrl/available-slots/';
   static const String manageSlotsUrl = '$doctorUrl/manage-slots/';
+
+  static const String prescriptionsUrl = '$doctorUrl/prescriptions/';
 }

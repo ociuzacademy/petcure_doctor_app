@@ -48,7 +48,7 @@ class TreatmentListServices {
         return response;
       } else {
         final Map<String, dynamic> errorResponse = jsonDecode(resp.body);
-        throw Exception(errorResponse['message'] ?? 'Unknown error');
+        throw Exception(errorResponse['error'] ?? 'Unknown error');
       }
     } on TimeoutException catch (e) {
       debugPrint('TreatmentListServices: Request timeout - $e');

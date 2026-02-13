@@ -82,12 +82,17 @@ class _TreatmentListPageState extends State<TreatmentListPage> {
               TreatmentHistorySuccess(:final treatmentHistory) => Column(
                 children: [
                   // Date selector
-                  DateSelectorWidget(
-                    selectedDate: _selectedDate.value,
-                    onSelectingDate: (date) {
-                      _selectedDate.value = date;
+                  ValueListenableBuilder(
+                    valueListenable: _selectedDate,
+                    builder: (context, selectedDate, child) {
+                      return DateSelectorWidget(
+                        selectedDate: selectedDate,
+                        onSelectingDate: (date) {
+                          _selectedDate.value = date;
+                        },
+                        recordsCount: treatmentHistory.treatments.length,
+                      );
                     },
-                    recordsCount: treatmentHistory.treatments.length,
                   ),
 
                   // Treatment records list

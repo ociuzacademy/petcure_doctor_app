@@ -222,12 +222,12 @@ _$ConfirmingLeaveCopyWith<_ConfirmingLeave> get copyWith => __$ConfirmingLeaveCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ConfirmingLeave&&const DeepCollectionEquality().equals(other.leaveApplicationData, leaveApplicationData));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ConfirmingLeave&&(identical(other.leaveApplicationData, leaveApplicationData) || other.leaveApplicationData == leaveApplicationData));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(leaveApplicationData));
+int get hashCode => Object.hash(runtimeType,leaveApplicationData);
 
 @override
 String toString() {
@@ -259,9 +259,9 @@ class __$ConfirmingLeaveCopyWithImpl<$Res>
 
 /// Create a copy of ConfirmLeaveEvent
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? leaveApplicationData = freezed,}) {
+@pragma('vm:prefer-inline') $Res call({Object? leaveApplicationData = null,}) {
   return _then(_ConfirmingLeave(
-freezed == leaveApplicationData ? _self.leaveApplicationData : leaveApplicationData // ignore: cast_nullable_to_non_nullable
+null == leaveApplicationData ? _self.leaveApplicationData : leaveApplicationData // ignore: cast_nullable_to_non_nullable
 as LeaveApplicationData,
   ));
 }
@@ -524,12 +524,12 @@ $ConfirmLeaveSuccessCopyWith<ConfirmLeaveSuccess> get copyWith => _$ConfirmLeave
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ConfirmLeaveSuccess&&const DeepCollectionEquality().equals(other.response, response));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ConfirmLeaveSuccess&&(identical(other.response, response) || other.response == response));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(response));
+int get hashCode => Object.hash(runtimeType,response);
 
 @override
 String toString() {
@@ -561,9 +561,9 @@ class _$ConfirmLeaveSuccessCopyWithImpl<$Res>
 
 /// Create a copy of ConfirmLeaveState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? response = freezed,}) {
+@pragma('vm:prefer-inline') $Res call({Object? response = null,}) {
   return _then(ConfirmLeaveSuccess(
-freezed == response ? _self.response : response // ignore: cast_nullable_to_non_nullable
+null == response ? _self.response : response // ignore: cast_nullable_to_non_nullable
 as ConfirmLeaveResponseModel,
   ));
 }

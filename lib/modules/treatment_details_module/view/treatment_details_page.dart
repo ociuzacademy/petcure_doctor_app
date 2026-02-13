@@ -11,6 +11,7 @@ import 'package:petcure_doctor_app/modules/treatment_details_module/widgets/sect
 import 'package:petcure_doctor_app/modules/treatment_details_module/widgets/treatment_booking_type_chip.dart';
 import 'package:petcure_doctor_app/modules/treatment_details_module/widgets/treatment_detail_card.dart';
 import 'package:petcure_doctor_app/modules/treatment_details_module/widgets/treatment_detail_row.dart';
+import 'package:petcure_doctor_app/modules/treatment_details_module/widgets/prescription_section.dart';
 import 'package:petcure_doctor_app/modules/treatment_details_module/widgets/treatment_detail_row_with_widget.dart';
 import 'package:petcure_doctor_app/modules/treatment_details_module/widgets/treatment_header_card.dart';
 import 'package:petcure_doctor_app/widgets/custom_error_widget.dart';
@@ -41,6 +42,7 @@ class _TreatmentDetailsPageState extends State<TreatmentDetailsPage> {
     );
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _treatmentDetailsHelper.treatmentDetailsInit();
+      _treatmentDetailsHelper.prescriptionInit();
     });
   }
 
@@ -130,17 +132,19 @@ class _TreatmentDetailsPageState extends State<TreatmentDetailsPage> {
                           value:
                               '${data.treatmentDetails.petDetails.weight} kg',
                         ),
-                        if (data
-                            .treatmentDetails
-                            .petDetails
-                            .healthCondition
-                            .isNotEmpty)
+                        if (data.treatmentDetails.petDetails.healthCondition !=
+                                null &&
+                            data
+                                .treatmentDetails
+                                .petDetails
+                                .healthCondition!
+                                .isNotEmpty)
                           TreatmentDetailRow(
                             label: 'Health Condition',
                             value: data
                                 .treatmentDetails
                                 .petDetails
-                                .healthCondition,
+                                .healthCondition!,
                           ),
                       ],
                     ),
@@ -163,12 +167,35 @@ class _TreatmentDetailsPageState extends State<TreatmentDetailsPage> {
                             value: data.treatmentDetails.symptoms!,
                             isMultiLine: true,
                           ),
-                        TreatmentDetailRow(
-                          label: 'Diagnosis &Verdict',
-                          value: data.treatmentDetails.diagnosis,
-                          isMultiLine: true,
-                        ),
+                        if (data.treatmentDetails.diagnosis != null &&
+                            data.treatmentDetails.diagnosis!.isNotEmpty)
+                          TreatmentDetailRow(
+                            label: 'Diagnosis &Verdict',
+                            value: data.treatmentDetails.diagnosis!,
+                            isMultiLine: true,
+                          ),
                       ],
+                    ),
+                    const SizedBox(height: 16),
+
+                    // Prescription Details
+                    BlocBuilder<PrescriptionCubit, PrescriptionState>(
+                      builder: (context, state) {
+                        return switch (state) {
+                          PrescriptionLoading() => const CustomLoadingWidget(
+                            message: 'Loading prescription...',
+                          ),
+                          PrescriptionLoaded(:final prescriptionModel) =>
+                            PrescriptionSection(
+                              prescriptionModel: prescriptionModel,
+                            ),
+                          PrescriptionError(:final error) => CustomErrorWidget(
+                            onRetry: _treatmentDetailsHelper.prescriptionInit,
+                            errorMessage: error,
+                          ),
+                          _ => const SizedBox.shrink(),
+                        };
+                      },
                     ),
                     const SizedBox(height: 16),
 

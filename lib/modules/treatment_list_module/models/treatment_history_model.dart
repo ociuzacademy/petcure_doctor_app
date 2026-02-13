@@ -43,9 +43,11 @@ class TreatmentHistoryModel {
         success: json['success'],
         doctorId: json['doctor_id'],
         date: DateTime.parse(json['date']),
-        treatments: List<Treatment>.from(
-          json['treatments'].map((x) => Treatment.fromJson(x)),
-        ),
+        treatments: json['treatments'] == null
+            ? []
+            : List<Treatment>.from(
+                json['treatments'].map((x) => Treatment.fromJson(x)),
+              ),
       );
 
   Map<String, dynamic> toJson() => {

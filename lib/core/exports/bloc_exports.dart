@@ -6,8 +6,9 @@ export 'package:petcure_doctor_app/modules/home_module/cubit/today_bookings_cubi
 export 'package:petcure_doctor_app/modules/appointment_details_module/cubit/appointment_details_cubit.dart';
 export 'package:petcure_doctor_app/modules/appointment_details_module/bloc/complete_appointment_bloc.dart';
 export 'package:petcure_doctor_app/modules/treatment_list_module/cubit/treatment_history_cubit.dart';
-export 'package:petcure_doctor_app/modules/treatment_details_module/cubit/treatment_details_cubit.dart';
+export 'package:petcure_doctor_app/modules/treatment_details_module/cubit/treatment_details/treatment_details_cubit.dart';
 export 'package:petcure_doctor_app/modules/feedback_and_complaints_module/cubit/doctor_feedbacks/doctor_feedbacks_cubit.dart';
 export 'package:petcure_doctor_app/modules/feedback_and_complaints_module/cubit/doctor_complaints/doctor_complaints_cubit.dart';
 export 'package:petcure_doctor_app/modules/time_slot_management_module/cubit/available_time_slots_cubit.dart';
 export 'package:petcure_doctor_app/modules/time_slot_management_module/bloc/confirm_leave_bloc.dart';
+export 'package:petcure_doctor_app/modules/treatment_details_module/cubit/prescription/prescription_cubit.dart';
