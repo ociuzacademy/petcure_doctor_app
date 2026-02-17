@@ -4,6 +4,8 @@ import 'package:petcure_doctor_app/core/enums/appointment_type.dart';
 import 'package:petcure_doctor_app/core/helpers/app_helpers.dart';
 import 'package:petcure_doctor_app/core/models/slot_model.dart';
 import 'package:petcure_doctor_app/modules/appointment_details_module/classes/complete_appointment_data.dart';
+import 'package:petcure_doctor_app/modules/appointment_details_module/enums/food_timing.dart';
+import 'package:petcure_doctor_app/modules/appointment_details_module/enums/medicine_time.dart';
 import 'package:petcure_doctor_app/modules/appointment_details_module/models/appointment_details_model.dart';
 
 class AppointmentDetailsProvider with ChangeNotifier {
@@ -123,14 +125,17 @@ class AppointmentDetailsProvider with ChangeNotifier {
       return null;
     }
 
-    final medications = medicationControllers.map((controller) {
-      return Medication(
-        name: controller.nameController.text.trim(),
-        dosage: controller.dosageController.text.trim(),
-        foodTiming: controller.foodTiming ?? '',
-        timeOfDay: controller.timeOfDay,
-      );
-    }).toList();
+    final medications = medicationControllers
+        .where((controller) => controller.foodTiming != null)
+        .map((controller) {
+          return Medication(
+            name: controller.nameController.text.trim(),
+            dosage: controller.dosageController.text.trim(),
+            foodTiming: controller.foodTiming!,
+            timeOfDay: controller.timeOfDay,
+          );
+        })
+        .toList();
 
     return CompleteAppointmentData(
       bookingId: bookingId,
@@ -176,8 +181,8 @@ class AppointmentDetailsProvider with ChangeNotifier {
 class MedicationFormController {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController dosageController = TextEditingController();
-  String? foodTiming;
-  List<String> timeOfDay = [];
+  FoodTiming? foodTiming;
+  List<MedicineTime> timeOfDay = [];
 
   void dispose() {
     nameController.dispose();

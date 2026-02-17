@@ -4,6 +4,9 @@
 
 import 'dart:convert';
 
+import 'package:petcure_doctor_app/modules/appointment_details_module/enums/food_timing.dart';
+import 'package:petcure_doctor_app/modules/appointment_details_module/enums/medicine_time.dart';
+
 CompleteAppointmentResponseModel completeAppointmentResponseModelFromJson(
   String str,
 ) => CompleteAppointmentResponseModel.fromJson(json.decode(str));
@@ -154,8 +157,8 @@ class Prescription {
 class Medication {
   final String name;
   final String dosage;
-  final String foodTiming;
-  final List<String> timeOfDay;
+  final FoodTiming foodTiming;
+  final List<MedicineTime> timeOfDay;
 
   const Medication({
     required this.name,
@@ -167,8 +170,8 @@ class Medication {
   Medication copyWith({
     String? name,
     String? dosage,
-    String? foodTiming,
-    List<String>? timeOfDay,
+    FoodTiming? foodTiming,
+    List<MedicineTime>? timeOfDay,
   }) => Medication(
     name: name ?? this.name,
     dosage: dosage ?? this.dosage,
@@ -179,14 +182,16 @@ class Medication {
   factory Medication.fromJson(Map<String, dynamic> json) => Medication(
     name: json['name'],
     dosage: json['dosage'],
-    foodTiming: json['food_timing'],
-    timeOfDay: List<String>.from(json['time_of_day'].map((x) => x)),
+    foodTiming: FoodTiming.fromString(json['food_timing']),
+    timeOfDay: List<MedicineTime>.from(
+      json['time_of_day'].map((x) => MedicineTime.fromString(x)),
+    ),
   );
 
   Map<String, dynamic> toJson() => {
     'name': name,
     'dosage': dosage,
-    'food_timing': foodTiming,
-    'time_of_day': List<dynamic>.from(timeOfDay.map((x) => x)),
+    'food_timing': foodTiming.label,
+    'time_of_day': List<dynamic>.from(timeOfDay.map((x) => x.label)),
   };
 }

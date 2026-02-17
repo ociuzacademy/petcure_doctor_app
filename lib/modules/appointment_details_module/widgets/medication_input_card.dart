@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:petcure_doctor_app/core/theme/app_palette.dart';
+import 'package:petcure_doctor_app/modules/appointment_details_module/enums/food_timing.dart';
+import 'package:petcure_doctor_app/modules/appointment_details_module/enums/medicine_time.dart';
 import 'package:petcure_doctor_app/widgets/text_fields/custom_text_field.dart';
 
 class MedicationInputCard extends StatefulWidget {
@@ -7,10 +9,10 @@ class MedicationInputCard extends StatefulWidget {
   final VoidCallback onRemove;
   final TextEditingController nameController;
   final TextEditingController dosageController;
-  final Function(String?) onFoodTimingChanged;
-  final Function(List<String>) onTimeOfDayChanged;
-  final String? initialFoodTiming;
-  final List<String> initialTimeOfDay;
+  final Function(FoodTiming?) onFoodTimingChanged;
+  final Function(List<MedicineTime>) onTimeOfDayChanged;
+  final FoodTiming? initialFoodTiming;
+  final List<MedicineTime> initialTimeOfDay;
 
   const MedicationInputCard({
     super.key,
@@ -29,14 +31,23 @@ class MedicationInputCard extends StatefulWidget {
 }
 
 class _MedicationInputCardState extends State<MedicationInputCard> {
-  late String? _selectedFoodTiming;
-  late List<String> _selectedTimeOfDay;
+  late final ValueNotifier<FoodTiming?> _selectedFoodTimingNotifier;
+  late final ValueNotifier<List<MedicineTime>> _selectedTimeOfDayNotifier;
 
   @override
   void initState() {
     super.initState();
-    _selectedFoodTiming = widget.initialFoodTiming;
-    _selectedTimeOfDay = List.from(widget.initialTimeOfDay);
+    _selectedFoodTimingNotifier = ValueNotifier(widget.initialFoodTiming);
+    _selectedTimeOfDayNotifier = ValueNotifier(
+      List.from(widget.initialTimeOfDay),
+    );
+  }
+
+  @override
+  void dispose() {
+    _selectedFoodTimingNotifier.dispose();
+    _selectedTimeOfDayNotifier.dispose();
+    super.dispose();
   }
 
   @override
@@ -93,28 +104,31 @@ class _MedicationInputCardState extends State<MedicationInputCard> {
               },
             ),
             const SizedBox(height: 12),
-            DropdownButtonFormField<String>(
-              value: _selectedFoodTiming,
-              decoration: const InputDecoration(
-                labelText: 'Food Timing',
-                border: OutlineInputBorder(),
-              ),
-              items: [
-                'before',
-                'after',
-                'with food',
-              ].map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
-              onChanged: (value) {
-                setState(() {
-                  _selectedFoodTiming = value;
-                });
-                widget.onFoodTimingChanged(value);
-              },
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Select food timing';
-                }
-                return null;
+            ValueListenableBuilder<FoodTiming?>(
+              valueListenable: _selectedFoodTimingNotifier,
+              builder: (context, selectedFoodTiming, child) {
+                return DropdownButtonFormField<FoodTiming>(
+                  value: selectedFoodTiming,
+                  decoration: const InputDecoration(
+                    labelText: 'Food Timing',
+                    border: OutlineInputBorder(),
+                  ),
+                  items: FoodTiming.values
+                      .map(
+                        (e) => DropdownMenuItem(value: e, child: Text(e.label)),
+                      )
+                      .toList(),
+                  onChanged: (value) {
+                    _selectedFoodTimingNotifier.value = value;
+                    widget.onFoodTimingChanged(value);
+                  },
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Select food timing';
+                    }
+                    return null;
+                  },
+                );
               },
             ),
             const SizedBox(height: 12),
@@ -123,38 +137,53 @@ class _MedicationInputCardState extends State<MedicationInputCard> {
               style: TextStyle(fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: 8),
-            Wrap(
-              spacing: 8,
-              children: ['morning', 'afternoon', 'evening', 'night'].map((
-                time,
-              ) {
-                final isSelected = _selectedTimeOfDay.contains(time);
-                return FilterChip(
-                  label: Text(time),
-                  selected: isSelected,
-                  onSelected: (selected) {
-                    setState(() {
-                      if (selected) {
-                        _selectedTimeOfDay.add(time);
-                      } else {
-                        _selectedTimeOfDay.remove(time);
-                      }
-                    });
-                    widget.onTimeOfDayChanged(_selectedTimeOfDay);
-                  },
-                  selectedColor: AppPalette.firstColor.withValues(alpha: 0.2),
-                  checkmarkColor: AppPalette.firstColor,
+            ValueListenableBuilder<List<MedicineTime>>(
+              valueListenable: _selectedTimeOfDayNotifier,
+              builder: (context, selectedTimeOfDay, child) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Wrap(
+                      spacing: 8,
+                      children: MedicineTime.values.map((time) {
+                        final isSelected = selectedTimeOfDay.contains(time);
+                        return FilterChip(
+                          label: Text(time.label),
+                          selected: isSelected,
+                          onSelected: (selected) {
+                            final updatedList = List<MedicineTime>.from(
+                              selectedTimeOfDay,
+                            );
+                            if (selected) {
+                              updatedList.add(time);
+                            } else {
+                              updatedList.remove(time);
+                            }
+                            _selectedTimeOfDayNotifier.value = updatedList;
+                            widget.onTimeOfDayChanged(updatedList);
+                          },
+                          selectedColor: AppPalette.firstColor.withValues(
+                            alpha: 0.2,
+                          ),
+                          checkmarkColor: AppPalette.firstColor,
+                        );
+                      }).toList(),
+                    ),
+                    if (selectedTimeOfDay.isEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 4),
+                        child: Text(
+                          'Select at least one time',
+                          style: TextStyle(
+                            color: Colors.red.shade700,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                  ],
                 );
-              }).toList(),
+              },
             ),
-            if (_selectedTimeOfDay.isEmpty)
-              Padding(
-                padding: const EdgeInsets.only(top: 4),
-                child: Text(
-                  'Select at least one time',
-                  style: TextStyle(color: Colors.red.shade700, fontSize: 12),
-                ),
-              ),
           ],
         ),
       ),

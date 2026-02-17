@@ -1,5 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:petcure_doctor_app/modules/appointment_details_module/classes/complete_appointment_data.dart';
+import 'package:petcure_doctor_app/modules/appointment_details_module/enums/food_timing.dart';
+import 'package:petcure_doctor_app/modules/appointment_details_module/enums/medicine_time.dart';
 
 void main() {
   group('CompleteAppointmentData', () {
@@ -7,22 +9,26 @@ void main() {
       const medication1 = Medication(
         name: 'Doxycycline',
         dosage: '100mg',
-        foodTiming: 'after',
-        timeOfDay: ['morning', 'evening', 'night'],
+        foodTiming: FoodTiming.after,
+        timeOfDay: [
+          MedicineTime.morning,
+          MedicineTime.evening,
+          MedicineTime.night,
+        ],
       );
 
       const medication2 = Medication(
         name: 'Multivitamin Syrup',
         dosage: '5ml',
-        foodTiming: 'after',
-        timeOfDay: ['morning'],
+        foodTiming: FoodTiming.after,
+        timeOfDay: [MedicineTime.morning],
       );
 
       const medication3 = Medication(
         name: 'Probiotic',
         dosage: '1 sachet',
-        foodTiming: 'before',
-        timeOfDay: ['morning'],
+        foodTiming: FoodTiming.before,
+        timeOfDay: [MedicineTime.morning],
       );
 
       const data = CompleteAppointmentData(
@@ -47,7 +53,7 @@ void main() {
       );
       expect(jsonMap['days_duration'], 10);
       expect(
-        jsonMap['notes'],
+        jsonMap['prescription_notes'],
         'Complete full antibiotic course. Probiotic should be given 2 hours apart from antibiotic.',
       );
 
