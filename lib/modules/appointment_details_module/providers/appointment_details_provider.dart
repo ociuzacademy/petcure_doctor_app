@@ -4,8 +4,8 @@ import 'package:petcure_doctor_app/core/enums/appointment_type.dart';
 import 'package:petcure_doctor_app/core/helpers/app_helpers.dart';
 import 'package:petcure_doctor_app/core/models/slot_model.dart';
 import 'package:petcure_doctor_app/modules/appointment_details_module/classes/complete_appointment_data.dart';
-import 'package:petcure_doctor_app/modules/appointment_details_module/enums/food_timing.dart';
-import 'package:petcure_doctor_app/modules/appointment_details_module/enums/medicine_time.dart';
+import 'package:petcure_doctor_app/core/enums/food_timing.dart';
+import 'package:petcure_doctor_app/core/enums/medicine_time.dart';
 import 'package:petcure_doctor_app/modules/appointment_details_module/models/appointment_details_model.dart';
 
 class AppointmentDetailsProvider with ChangeNotifier {

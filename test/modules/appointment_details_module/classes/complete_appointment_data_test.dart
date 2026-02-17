@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:petcure_doctor_app/modules/appointment_details_module/classes/complete_appointment_data.dart';
-import 'package:petcure_doctor_app/modules/appointment_details_module/enums/food_timing.dart';
-import 'package:petcure_doctor_app/modules/appointment_details_module/enums/medicine_time.dart';
+import 'package:petcure_doctor_app/core/enums/food_timing.dart';
+import 'package:petcure_doctor_app/core/enums/medicine_time.dart';
 
 void main() {
   group('CompleteAppointmentData', () {

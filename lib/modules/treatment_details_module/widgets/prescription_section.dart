@@ -61,9 +61,9 @@ class PrescriptionSection extends StatelessWidget {
                             style: const TextStyle(fontWeight: FontWeight.w600),
                           ),
                           Text('Dosage: ${medication.dosage}'),
-                          Text('Timing: ${medication.foodTiming}'),
+                          Text('Timing: ${medication.foodTiming.label}'),
                           Text(
-                            'Time of Day: ${medication.timeOfDay.join(", ")}',
+                            'Time of Day: ${medication.timeOfDay.map((e) => e.label).join(", ")}',
                           ),
                         ],
                       ),

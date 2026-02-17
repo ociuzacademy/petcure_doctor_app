@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:petcure_doctor_app/core/theme/app_palette.dart';
-import 'package:petcure_doctor_app/modules/appointment_details_module/enums/food_timing.dart';
-import 'package:petcure_doctor_app/modules/appointment_details_module/enums/medicine_time.dart';
+import 'package:petcure_doctor_app/core/enums/food_timing.dart';
+import 'package:petcure_doctor_app/core/enums/medicine_time.dart';
 import 'package:petcure_doctor_app/widgets/text_fields/custom_text_field.dart';
 
 class MedicationInputCard extends StatefulWidget {
