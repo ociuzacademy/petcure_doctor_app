@@ -108,7 +108,7 @@ class _MedicationInputCardState extends State<MedicationInputCard> {
               valueListenable: _selectedFoodTimingNotifier,
               builder: (context, selectedFoodTiming, child) {
                 return DropdownButtonFormField<FoodTiming>(
-                  value: selectedFoodTiming,
+                  initialValue: selectedFoodTiming,
                   decoration: const InputDecoration(
                     labelText: 'Food Timing',
                     border: OutlineInputBorder(),

@@ -150,7 +150,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                         icon: Icons.map,
                         iconColor: Colors.green,
                         text:
-                            'Lat: ${profileData.doctorProfile.latitude}, Lon: ${profileData.doctorProfile.longitude}',
+                            'Lat: ${double.parse(profileData.doctorProfile.latitude).toStringAsFixed(3)}, Lon: ${double.parse(profileData.doctorProfile.longitude).toStringAsFixed(3)}',
                         trailing: IconButton(
                           icon: const Icon(
                             Icons.open_in_new,
